@@ -1,6 +1,6 @@
 /* Service worker: guarda a aplicação e o dicionário para uso offline. */
-const VERSION = "lx-v1";
-const SHELL = ["./", "index.html", "styles.css", "app.js", "manifest.webmanifest",
+const VERSION = "lx-v2";
+const SHELL = ["./", "index.html", "styles.css", "app.js", "keyboard.js", "manifest.webmanifest",
   "icons/icon-192.png", "icons/icon-512.png", "icons/apple-touch-icon.png"];
 const DATA = "data/ddgp.json?v=2022-3x-1";
 

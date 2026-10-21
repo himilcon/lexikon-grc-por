@@ -409,6 +409,13 @@ function viewAbout() {
     <p><b>Grego</b>: digite com ou sem acentos e espíritos (<i>λογος</i> encontra λόγος). Também aceita transliteração e Beta Code:</p>
     <table><tr><th>Digite</th><th>Grego</th></tr>${rows.map(([a, b]) => `<tr><td><code>${a}</code></td><td>${b}</td></tr>`).join("")}</table>
     <p>Sinais de Beta Code (<code>/ \\ = ( ) + |</code>) são ignorados. A busca encontra o lema exato, depois os que começam pelo texto digitado e as formas citadas no cabeçalho do verbete.</p>
+    <h3>Teclado grego politônico</h3>
+    <p>Toque em <b>αβγ</b>, ao lado do campo de busca. Digite a letra e <i>depois</i> o sinal:
+      α + ◌̓ + ◌́ = ἄ; ω + ◌̔ + ◌͂ + ◌ͅ = ᾧ; ρ + ◌̔ = ῥ. Tocar de novo no mesmo sinal o remove; agudo, grave e
+      circunflexo se substituem entre si, assim como os dois espíritos. O σ final vira ς ao digitar espaço.
+      Num teclado físico, com o painel aberto: <code>Alt</code> + <code>)</code> brando, <code>(</code> áspero,
+      <code>/</code> agudo, <code>\\</code> grave, <code>=</code> circunflexo, <code>|</code> iota subscrito, <code>+</code> diérese.
+      Como a busca ignora acentos, os sinais servem para escrever corretamente e copiar, não são obrigatórios.</p>
     <p><b>Português</b>: procura nos significados (todas as palavras digitadas precisam aparecer).</p>
     <p>Dentro de um verbete, toque numa palavra grega para procurá-la e numa abreviatura (<i>hom.</i>, <i>aor.</i>…) para ver o que significa.</p>
 
