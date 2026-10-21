@@ -88,6 +88,13 @@ Textos disponíveis:
 | Platão, *Banquete* (Συμπόσιον) | Burnet (Perseus) | 17 349 |
 | Platão, *Fédon* (Φαίδων) | Burnet (Perseus) | 22 356 |
 | Platão, *República* (Πολιτεία) | Burnet (Perseus) | 88 265 |
+| Xenofonte, *Anábase* (Κύρου ἀνάβασις) | Marchant, Oxford 1904 (Perseus) | 57 195 |
+| Heródoto, *Histórias* (Ἱστορίαι) | Godley, Loeb 1920 (Perseus) — anotação manual (PROIEL) em ~46% das frases | 184 943 |
+
+Em Xenofonte e Heródoto a referência é livro.capítulo.seção (`4.7.24`, `7.226`): na *Anábase* os
+capítulos são títulos e as seções vão à margem; em Heródoto, capítulos (em destaque) e seções vão à
+margem, e cada capítulo forma um parágrafo. Os livros de Heródoto levam os nomes das Musas. O painel
+indica, palavra a palavra, se a análise é manual (treebank) ou automática.
 
 Em Platão, a margem traz a paginação de **Stephanus** (17a, 514a), e o campo de referência leva direto
 a ela; cada nova fala ou parágrafo começa em linha nova, com o nome do interlocutor (ΣΩ., ΜΕΝ.) quando
@@ -121,7 +128,9 @@ pelas letras sem diacríticos; a ortografia exibida é sempre a do TEI. Resultad
 | *Mênon* | 9 689 de 9 703 | 26 de 914 | 55 (0,6%) |
 | *Banquete* | 17 347 de 17 349 | 70 de 1 904 | 142 (0,8%) |
 | *Fédon* | 22 274 de 22 356 | 27 de 1 899 | 43 (0,2%) |
-| *República* | 88 204 de 88 265 | 291 de 4 628 | 385 (0,4%) |
+| *República* | 88 204 de 88 265 | 286 de 4 629 | 378 (0,4%) |
+| *Anábase* | 56 595 de 57 195 (faltam os sumários no início dos livros, tidos por espúrios) | 244 de 3 614 | 734 (1,3%) |
+| *Histórias* | 184 843 de 184 943 | 1 493 de 8 988 | 4 275 (2,3%), dos quais ~3 950 nomes próprios |
 
 As palavras sem análise são, em geral, as que o editor exclui ([ ]) ou variantes ausentes da versão do
 texto usada pelo GLAUx; o painel as procura diretamente no dicionário.
@@ -130,7 +139,10 @@ Os lemas sem verbete são sobretudo termos técnicos (ἐντελέχεια, ἀ
 nomes próprios (Ἐμπεδοκλῆς, Δημόκριτος); para esses o painel oferece um link ao Logeion.
 Quando o lema do GLAUx não está no DDGP, o conversor tenta também a forma do texto, a grafia sem ν
 eufônico (ἔμπροσθεν → ἔμπροσθε), a forma ática com ττ, a outra voz do verbo (μαντεύομαι → μαντεύω,
-χαρίζω → χαρίζομαι) e μίγνυμι por μείγνυμι; verbetes como `παντάπασι(ν)` são indexados nas duas grafias.
+χαρίζω → χαρίζομαι), μίγνυμι por μείγνυμι e, para substantivos neutros e femininos registrados no verbete
+do adjetivo, a forma em ‑ος (χρηστήριον → χρηστήριος, Ἀττική → Ἀττικός); verbetes como `παντάπασι(ν)`
+são indexados nas duas grafias. O DDGP registra poucos nomes próprios, o que explica a maior parte das
+lacunas em Heródoto e Xenofonte.
 Alguns lemas do GLAUx são corrigidos em `LEMMA_FIX`, e homógrafos frequentes têm o verbete preferido
 fixado em `PREFERRED`, ambos em `scripts/build_text.py`.
 
@@ -142,7 +154,9 @@ fixado em `PREFERRED`, ambos em `scripts/build_text.py`.
 3. Crie `scripts/textos/<id>.json` com os metadados (copie o das *Categorias* para obras de um só nível,
    ou o da *Metafísica* para obras em livros e capítulos, ou o de um diálogo de Platão: `niveis` dá o
    nome de cada nível e os rótulos dos livros; `ignorarDivisoes` evita que divisões de página virem
-   capítulos; `referencia` (`"Bekker"`, `"Stephanus"`) e `exemploRef` ativam o campo de referência).
+   capítulos; `divisoesComoMarco` mostra divisões (capítulo, seção) como números à margem;
+   `juntarParagrafos` une as seções de um capítulo num parágrafo; `referencia` e `exemploRef` ativam o
+   campo de referência; `treebank` nomeia a anotação manual, quando houver).
 4. Rode o conversor e confira, na lista que ele imprime, os lemas sem verbete: lemas malformados pelo
    lematizador (ex.: `ἔρχοναι` para εἶναι) vão para `LEMMA_FIX`.
 5. Gere o arquivo:
@@ -182,7 +196,7 @@ Correções lexicográficas devem ser enviadas ao projeto original.
 > distribuído gratuitamente, mas não vendido nem monetizado.
 
 **Textos e anotações** (`docs/textos/`): texto grego do First1KGreek/Perseus e anotação do GLAUx,
-**CC BY-SA 4.0**, com uma exceção: a *Apologia*, cuja anotação vem do treebank de Vanessa Gorman,
-**CC BY-NC-SA 4.0** — ver [`LICENSE-DATA.md`](LICENSE-DATA.md).
+**CC BY-SA 4.0**, com duas exceções sob **CC BY-NC-SA**: a *Apologia* (treebank de Vanessa Gorman) e as
+*Histórias* de Heródoto (treebank PROIEL) — ver [`LICENSE-DATA.md`](LICENSE-DATA.md).
 
 **Código** (HTML, CSS, JS, scripts): licença MIT — ver [`LICENSE`](LICENSE).

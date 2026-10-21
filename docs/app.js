@@ -284,8 +284,9 @@ function viewHome() {
     ${hist.length ? `<h3 class="count">Consultados recentemente</h3><div class="chips">${hist.slice(0, 15).map(chip).join("")}</div>` : ""}
     <h3 class="count">Experimente</h3><div class="chips">${examples}<a href="#/acaso">ao acaso ↻</a></div>
     <h3 class="count">Ler textos</h3>
-    <a class="home-texts" href="#/textos"><span lang="grc">Πλάτων · Ἀριστοτέλης</span>
-      <span>Platão (<i>Apologia</i>, <i>Mênon</i>, <i>Banquete</i>, <i>Fédon</i>, <i>República</i>) e Aristóteles (<i>Categorias</i>, <i>Metafísica</i>):
+    <a class="home-texts" href="#/textos"><span lang="grc">Ἡρόδοτος · Πλάτων · Ξενοφῶν · Ἀριστοτέλης</span>
+      <span>Heródoto (<i>Histórias</i>), Platão (<i>Apologia</i>, <i>Mênon</i>, <i>Banquete</i>, <i>Fédon</i>, <i>República</i>),
+        Xenofonte (<i>Anábase</i>) e Aristóteles (<i>Categorias</i>, <i>Metafísica</i>):
         toque em cada palavra para ver lema, análise e verbete →</span></a>`;
 }
 
@@ -431,7 +432,8 @@ function viewAbout() {
       ambos CC BY-SA 4.0. A anotação é automática e pode conter erros, sobretudo na sintaxe.
       No teclado: <code>←</code> <code>→</code> mudam de palavra, <code>Esc</code> fecha o painel.
       O campo de referência leva direto a uma passagem: numeração de <b>Stephanus</b> em Platão (<code>514a</code>, <code>40c</code>)
-      e de <b>Bekker</b> em Aristóteles (<code>1072b14</code>, <code>1028a</code>); links como
+      e de <b>Bekker</b> em Aristóteles (<code>1072b14</code>, <code>1028a</code>), livro.capítulo.seção em Heródoto e Xenofonte
+      (<code>7.226</code>, <code>4.7.24</code>); links como
       <code>…/#/t/platao-republica/514a</code> também funcionam.</p>
 
     <h3>Instalar no iPhone / iPad</h3>

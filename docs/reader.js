@@ -290,7 +290,8 @@ function showPart(p) {
       else if (it.s) {
         const bk = isBekker(it.s);
         const lab = it.d || it.s.split(".").pop();
-        inner += `<a class="sec${bk ? " bk" : ""}${bk && it.d && it.d === it.s ? " bkp" : ""}" href="#/t/${R.id}/${esc(it.s)}" data-s="${esc(it.s)}" title="${esc(refLabel(it.s))}">${esc(lab)}</a>`;
+        const kind = it.k === "cap" ? " capm" : it.k === "sec" ? " secm" : "";
+        inner += `<a class="sec${kind}${bk ? " bk" : ""}${bk && it.d && it.d === it.s ? " bkp" : ""}" href="#/t/${R.id}/${esc(it.s)}" data-s="${esc(it.s)}" title="${esc(refLabel(it.s))}">${esc(lab)}</a>`;
       }
       else if (it.pb) inner += `<span class="pb" title="página ${esc(it.pb)} da edição impressa">${esc(it.pb)}</span>`;
     }
@@ -447,8 +448,8 @@ function renderPanel() {
     </div>
     ${rows ? `<div class="ans">${rows}</div>` : ""}
     ${entryHtml}
-    <div class="rp-note">${R.doc.meta.anotacaoManual
-      ? "Análise manual (treebank de Vanessa Gorman, harmonizado pelo GLAUx)."
+    <div class="rp-note">${an.length && an.every(a => !a[1] || a[5])
+      ? `Análise manual (${esc(R.doc.meta.treebank || "treebank")}, harmonizada pelo GLAUx).`
       : "Análise automática (GLAUx): lemas ≈ 99%, morfologia ≈ 97%, sintaxe ≈ 80% de acerto."}</div>`;
   p.hidden = false;
   p.scrollTop = 0;

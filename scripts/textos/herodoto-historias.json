@@ -1,0 +1,60 @@
+{
+  "id": "herodoto-historias",
+  "autor": "Heródoto",
+  "autorGr": "Ἡρόδοτος",
+  "titulo": "Histórias",
+  "tituloGr": "Ἱστορίαι",
+  "cts": "urn:cts:greekLit:tlg0016.tlg001",
+  "edicao": "Herodotus, ed. A. D. Godley, 4 vols. (Loeb Classical Library). Cambridge, MA: Harvard University Press; London: Heinemann, 1920–1925.",
+  "edicaoCurta": "Godley, 1920",
+  "referencia": "Ref.",
+  "exemploRef": "7.226",
+  "niveis": [
+    {
+      "nome": "Livro",
+      "rotulos": {
+        "1": "I",
+        "2": "II",
+        "3": "III",
+        "4": "IV",
+        "5": "V",
+        "6": "VI",
+        "7": "VII",
+        "8": "VIII",
+        "9": "IX"
+      },
+      "extra": {
+        "1": "Κλειώ",
+        "2": "Εὐτέρπη",
+        "3": "Θάλεια",
+        "4": "Μελπομένη",
+        "5": "Τερψιχόρη",
+        "6": "Ἐρατώ",
+        "7": "Πολύμνια",
+        "8": "Οὐρανίη",
+        "9": "Καλλιόπη"
+      }
+    }
+  ],
+  "divisoesComoMarco": {
+    "chapter": "cap",
+    "section": "sec"
+  },
+  "juntarParagrafos": true,
+  "treebank": "treebank PROIEL",
+  "fonteTexto": {
+    "nome": "Perseus Digital Library (canonical-greekLit)",
+    "url": "https://github.com/PerseusDL/canonical-greekLit/blob/master/data/tlg0016/tlg001/tlg0016.tlg001.perseus-grc2.xml",
+    "arquivo": "data/tlg0016/tlg001/tlg0016.tlg001.perseus-grc2.xml",
+    "licenca": "CC BY-SA 4.0"
+  },
+  "fonteAnotacao": {
+    "nome": "GLAUx (A. Keersmaekers, KU Leuven), com o treebank manual PROIEL (Univ. de Oslo) para parte do texto",
+    "url": "https://github.com/alekkeersmaekers/glaux",
+    "arquivo": "xml/0016-001.xml",
+    "licenca": "CC BY-NC-SA (PROIEL 3.0; GLAUx 4.0)",
+    "nota": "Cerca de metade das frases tem anotação manual do treebank PROIEL; as demais, anotação automática do GLAUx (lemas 98,8%, morfologia 97,2%, sintaxe ~80%). O painel indica, palavra a palavra, qual é o caso."
+  },
+  "notaEdicao": "Os números maiores à margem são os capítulos; os menores, as seções. A referência é livro.capítulo (ex.: 7.226, Termópilas) ou livro.capítulo.seção. O texto é jônico: os lemas e os verbetes vêm na forma ática (εἰς para ἐς, ποιέω para ποιέω/ποιέει…). Os livros têm os nomes tradicionais das Musas.",
+  "descricao": "A “exposição da investigação” de Heródoto de Halicarnasso: as origens do conflito entre gregos e bárbaros, Creso e Ciro, o Egito, Cambises e Dario, os citas, a revolta jônia, Maratona, a invasão de Xerxes, Termópilas, Salamina e Plateia."
+}

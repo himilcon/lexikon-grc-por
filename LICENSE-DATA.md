@@ -39,10 +39,14 @@ Cada arquivo de `docs/textos/` combina:
 Alterações: alinhamento palavra a palavra entre o texto TEI e os tokens do GLAUx; recomposição em
 palavras gráficas de crases e compostos que o GLAUx divide; correção de alguns lemas (lista em
 `LEMMA_FIX`, em `scripts/build_text.py`); tradução das etiquetas morfológicas e sintáticas para o
-português na interface. Os arquivos de `docs/textos/` são distribuídos sob **CC BY-SA 4.0**, com uma exceção:
+português na interface. Os arquivos de `docs/textos/` são distribuídos sob **CC BY-SA 4.0**, com duas exceções:
 
 - **`platao-apologia.json`**: a anotação (lemas, morfologia e sintaxe) do GLAUx para a *Apologia* vem
   do treebank manual de **Vanessa Gorman**, *Ancient Greek Prose Dependency Treebanks*
   (<https://github.com/vgorman1/Greek-Dependency-Trees>), licença **CC BY-NC-SA 4.0**
   (<https://creativecommons.org/licenses/by-nc-sa/4.0/deed.pt-br>). Este arquivo é distribuído sob
   CC BY-NC-SA 4.0: uso não comercial.
+- **`herodoto-historias.json`**: para cerca de metade das frases, a anotação do GLAUx vem do
+  **PROIEL Treebank** (Universidade de Oslo, <https://github.com/proiel/proiel-treebank>), licença
+  **CC BY-NC-SA 3.0** (<https://creativecommons.org/licenses/by-nc-sa/3.0/>). Este arquivo é distribuído
+  sob CC BY-NC-SA: uso não comercial.

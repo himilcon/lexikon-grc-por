@@ -1,26 +1,15 @@
 {
  "textos": [
   {
-   "id": "aristoteles-categorias",
-   "autor": "Aristóteles",
-   "autorGr": "Ἀριστοτέλης",
-   "titulo": "Categorias",
-   "tituloGr": "Κατηγορίαι",
-   "descricao": "O primeiro tratado do Órganon: homônimos, sinônimos e parônimos; as dez categorias (substância, quantidade, relação, qualidade, ação, paixão, lugar, tempo, posição, posse); os opostos e os chamados Postpraedicamenta.",
-   "edicaoCurta": "Bekker, 1837",
-   "palavras": 10316,
-   "versao": "6f74457996"
-  },
-  {
-   "id": "aristoteles-metafisica",
-   "autor": "Aristóteles",
-   "autorGr": "Ἀριστοτέλης",
-   "titulo": "Metafísica",
-   "tituloGr": "Τὰ μετὰ τὰ φυσικά",
-   "descricao": "Os catorze livros sobre a “filosofia primeira”: as causas e os princípios (Α), as aporias (Β), o ser enquanto ser e o princípio de não contradição (Γ), o léxico filosófico (Δ), a substância (Ζ, Η), ato e potência (Θ) e o primeiro motor imóvel (Λ).",
-   "edicaoCurta": "Ross, 1924",
-   "palavras": 78946,
-   "versao": "4d97f243b3"
+   "id": "herodoto-historias",
+   "autor": "Heródoto",
+   "autorGr": "Ἡρόδοτος",
+   "titulo": "Histórias",
+   "tituloGr": "Ἱστορίαι",
+   "descricao": "A “exposição da investigação” de Heródoto de Halicarnasso: as origens do conflito entre gregos e bárbaros, Creso e Ciro, o Egito, Cambises e Dario, os citas, a revolta jônia, Maratona, a invasão de Xerxes, Termópilas, Salamina e Plateia.",
+   "edicaoCurta": "Godley, 1920",
+   "palavras": 184943,
+   "versao": "f1a88ab73f"
   },
   {
    "id": "platao-apologia",
@@ -31,7 +20,7 @@
    "descricao": "A defesa de Sócrates diante do tribunal de Atenas, em 399 a.C.: a resposta às acusações antigas e às de Meleto, a missão recebida do oráculo de Delfos, a contraproposta de pena e as palavras finais aos juízes.",
    "edicaoCurta": "Burnet",
    "palavras": 8752,
-   "versao": "1c585966f3"
+   "versao": "8b7c2b25d0"
   },
   {
    "id": "platao-menon",
@@ -42,7 +31,7 @@
    "descricao": "Pode a virtude ser ensinada? Sócrates e Mênon buscam definir a virtude; o paradoxo da investigação, a reminiscência demonstrada com o escravo e o problema do duplo do quadrado, e a distinção entre opinião verdadeira e conhecimento.",
    "edicaoCurta": "Burnet",
    "palavras": 9703,
-   "versao": "e0620bafa6"
+   "versao": "0f64e74f67"
   },
   {
    "id": "platao-banquete",
@@ -53,7 +42,7 @@
    "descricao": "Os discursos em louvor de Eros no banquete de Agatão: Fedro, Pausânias, Erixímaco, Aristófanes (o mito dos andróginos), Agatão, Sócrates relatando a lição de Diotima, e a entrada de Alcibíades.",
    "edicaoCurta": "Burnet",
    "palavras": 17349,
-   "versao": "80de9d3b62"
+   "versao": "dfbc009735"
   },
   {
    "id": "platao-fedon",
@@ -64,7 +53,7 @@
    "descricao": "O último dia de Sócrates na prisão: a filosofia como preparação para a morte, os argumentos da imortalidade da alma (contrários, reminiscência, afinidade, a forma da vida), o mito final e a morte de Sócrates.",
    "edicaoCurta": "Burnet",
    "palavras": 22356,
-   "versao": "4ab4c760bc"
+   "versao": "1991f42d28"
   },
   {
    "id": "platao-republica",
@@ -75,7 +64,40 @@
    "descricao": "Os dez livros sobre a justiça: a discussão com Trasímaco, a cidade ideal e suas classes, a alma tripartida, os reis-filósofos, o Sol, a Linha dividida e a Caverna, as formas de governo, a crítica da poesia e o mito de Er.",
    "edicaoCurta": "Burnet",
    "palavras": 88265,
-   "versao": "ed9cbfcaf6"
+   "versao": "9511e1314a"
+  },
+  {
+   "id": "xenofonte-anabase",
+   "autor": "Xenofonte",
+   "autorGr": "Ξενοφῶν",
+   "titulo": "Anábase",
+   "tituloGr": "Κύρου ἀνάβασις",
+   "descricao": "A expedição de Ciro, o Jovem, contra o irmão Artaxerxes e a retirada dos Dez Mil mercenários gregos, da Babilônia ao mar Negro, narrada por Xenofonte, que os comandou: Cunaxa, a travessia da Armênia e o grito θάλαττα θάλαττα.",
+   "edicaoCurta": "Marchant, 1904",
+   "palavras": 57195,
+   "versao": "e85b7ffb92"
+  },
+  {
+   "id": "aristoteles-categorias",
+   "autor": "Aristóteles",
+   "autorGr": "Ἀριστοτέλης",
+   "titulo": "Categorias",
+   "tituloGr": "Κατηγορίαι",
+   "descricao": "O primeiro tratado do Órganon: homônimos, sinônimos e parônimos; as dez categorias (substância, quantidade, relação, qualidade, ação, paixão, lugar, tempo, posição, posse); os opostos e os chamados Postpraedicamenta.",
+   "edicaoCurta": "Bekker, 1837",
+   "palavras": 10316,
+   "versao": "cb9cbec308"
+  },
+  {
+   "id": "aristoteles-metafisica",
+   "autor": "Aristóteles",
+   "autorGr": "Ἀριστοτέλης",
+   "titulo": "Metafísica",
+   "tituloGr": "Τὰ μετὰ τὰ φυσικά",
+   "descricao": "Os catorze livros sobre a “filosofia primeira”: as causas e os princípios (Α), as aporias (Β), o ser enquanto ser e o princípio de não contradição (Γ), o léxico filosófico (Δ), a substância (Ζ, Η), ato e potência (Θ) e o primeiro motor imóvel (Λ).",
+   "edicaoCurta": "Ross, 1924",
+   "palavras": 78946,
+   "versao": "ca76e23863"
   }
  ]
 }

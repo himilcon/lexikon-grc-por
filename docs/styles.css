@@ -316,3 +316,5 @@ body.reading main { max-width: 1240px; }
 .tauthor span { text-transform: none; letter-spacing: 0; font-size: 15px; margin-left: 6px; }
 .rtext .lab { font-size: 15px; letter-spacing: .08em; color: var(--accent); }
 .rcaps:not(:has(a)) { display: none; }
+.rtext .sec.capm { font-size: 14px; font-weight: 700; color: var(--accent); vertical-align: baseline; line-height: inherit; padding-right: 5px; }
+.rtext .sec.secm { color: var(--ink-soft); font-size: 11px; }

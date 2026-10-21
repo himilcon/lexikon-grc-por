@@ -137,6 +137,11 @@ def variants(b):
         base.append(b.replace("σσ", "ττ"))           # jônico/koiné σσ → ático ττ
     if "ειγν" in b:
         base.append(b.replace("ειγν", "ιγν"))        # συμμείγνυμι → συμμίγνυμι
+    # substantivo registrado no verbete do adjetivo: χρηστήριον → χρηστήριος, Ἀττική → Ἀττικός
+    if b.endswith("ον"):                            # também μνημόσυνον → μνημόσυνος, λύχνον → λύχνος
+        base.append(b[:-2] + "οσ")
+    if b.endswith("ικη"):
+        base.append(b[:-1] + "οσ")
     out = []
     for v in base:
         out.append(v)
@@ -180,6 +185,7 @@ def tei_blocks(path, meta):
     """
     levels = meta.get("niveis") or [{"nome": "Capítulo"}]
     skip_divs = set(meta.get("ignorarDivisoes") or [])   # ex.: as páginas de Stephanus, que viram só marcos
+    as_marks = meta.get("divisoesComoMarco") or {}       # ex.: {"chapter": "cap", "section": "sec"}
     root = ET.parse(path).getroot()
     body = root.find(f".//{TEI}body")
     blocks = []
@@ -254,7 +260,14 @@ def tei_blocks(path, meta):
         for ch in el:
             tag = ch.tag.replace(TEI, "")
             if tag == "div":
-                if ch.get("type") == "textpart" and ch.get("subtype") not in skip_divs:
+                kind = as_marks.get(ch.get("subtype")) if ch.get("type") == "textpart" else None
+                if kind:
+                    # divisão mostrada só como número à margem (capítulo e seção em Heródoto, seção na Anábase)
+                    state["path"] = state["path"][:depth] + [ch.get("n")]
+                    if ch.get("n") != "0":
+                        blocks.append({"t": "m", "m": {"s": ".".join(state["path"]), "d": ch.get("n"), "k": kind}})
+                    visit(ch, depth + 1)
+                elif ch.get("type") == "textpart" and ch.get("subtype") not in skip_divs:
                     state["path"] = state["path"][:depth] + [ch.get("n")]
                     rot, chip = label(depth, ch.get("n"))
                     blocks.append({"t": "c", "c": ".".join(state["path"]), "lv": depth, "rot": rot, "chip": chip})
@@ -275,6 +288,23 @@ def tei_blocks(path, meta):
                 visit(ch, depth)
 
     visit(body, 0)
+
+    # Heródoto: as seções de um capítulo correm num só parágrafo (cada capítulo começa um novo)
+    if meta.get("juntarParagrafos"):
+        merged, prev_p = [], None
+        for b in blocks:
+            if b["t"] == "m" and b["m"].get("k") == "cap":
+                prev_p = None
+                merged.append(b)
+            elif b["t"] == "m" and prev_p is not None:
+                prev_p["x"].append(b["m"])          # marco de seção vai para dentro do parágrafo corrente
+            elif b["t"] == "p" and prev_p is not None:
+                prev_p["x"].append(" ")
+                prev_p["x"].extend(b["x"])
+            else:
+                merged.append(b)
+                prev_p = b if b["t"] == "p" else None
+        blocks = merged
 
     # Marcos soltos entre parágrafos ou antes de um título passam para o parágrafo seguinte
     out, pending = [], []
@@ -362,7 +392,13 @@ def split_words(blocks):
 def glaux_groups(path):
     """Agrupa os tokens do GLAUx em palavras gráficas (crase e οὔ + -τε voltam a ser uma palavra)."""
     root = ET.parse(path).getroot()
-    toks = [w.attrib for s in root for w in s]
+    toks = []
+    for s in root:
+        manual = s.get("analysis") == "manual"
+        for w in s:
+            t = dict(w.attrib)
+            t["_manual"] = manual
+            toks.append(t)
     by_id = {t["id"]: t for t in toks}
     groups, cur, join_next = [], None, False
     for t in toks:
@@ -459,7 +495,7 @@ def build(meta_path, tei_path, glaux_path, ddgp_path, out_dir):
             if head == wi:
                 head = -1
             analyses.append([lem_index(t["lemma"], nfc(t["form"]).strip("-")), t["postag"],
-                             t.get("relation", ""), head, 1 if ell else 0])
+                             t.get("relation", ""), head, 1 if ell else 0, 1 if t["_manual"] else 0])
         w.append(analyses)
         stats["anotadas"] += 1
         if not any(lemmas[a[0]][1] for a in analyses):
