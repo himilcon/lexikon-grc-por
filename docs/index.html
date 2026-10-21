@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Λεξικόν — Grego-Português</title>
+<meta name="description" content="Dicionário de grego antigo–português baseado no DDGP (FCLAr/UNESP). Funciona offline.">
+<meta name="theme-color" content="#f6f1e7" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#1b1916" media="(prefers-color-scheme: dark)">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Λεξικόν">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon-192.png" type="image/png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gentium+Book+Plus:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="top">
+  <a class="brand" href="#/" aria-label="Início">
+    <span class="brand-gr">Λεξικόν</span>
+    <span class="brand-pt">grego antigo · português</span>
+  </a>
+  <nav class="top-nav">
+    <a href="#/favoritos" title="Favoritos">★</a>
+    <a href="#/sobre" title="Sobre e ajuda">?</a>
+  </nav>
+</header>
+
+<div class="search-wrap">
+  <form class="search" id="search-form" role="search" autocomplete="off">
+    <input id="q" type="search" inputmode="text" spellcheck="false" autocapitalize="off" autocorrect="off"
+           placeholder="λόγος · logos · lo/gos · palavra" aria-label="Buscar">
+    <div class="modes" role="radiogroup" aria-label="Tipo de busca">
+      <label><input type="radio" name="mode" value="grc" checked> Grego</label>
+      <label><input type="radio" name="mode" value="por"> Português</label>
+    </div>
+  </form>
+  <div class="hint" id="hint"></div>
+</div>
+
+<nav class="alphabet" id="alphabet" aria-label="Navegar por letra"></nav>
+
+<main id="main">
+  <div class="loading" id="loading">
+    <div class="loading-gr">φορτίζεται…</div>
+    <div>Carregando o dicionário <span id="load-pct"></span></div>
+  </div>
+</main>
+
+<footer class="foot">
+  Dados: <a href="https://github.com/aniseferreira/Grc-Por-DigDict" target="_blank" rel="noopener">DDGP — Dicionário Grego-Português, FCLAr/UNESP</a>
+  · <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.pt-br" target="_blank" rel="noopener">CC BY-NC-SA 4.0</a>
+  · <a href="#/sobre">sobre</a>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>
