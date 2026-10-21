@@ -17,3 +17,26 @@ hifens condicionais e quebra das acepções numeradas em linhas separadas.
 
 Segundo o arquivo de licença original, a edição e a distribuição impressas permanecem sob
 exclusividade da Ateliê Editorial.
+
+
+---
+
+# Licença dos textos anotados (`docs/textos/`)
+
+Cada arquivo de `docs/textos/` combina:
+
+- **Texto grego**: transcrição digital em TEI do projeto First1KGreek (Open Greek and Latin, Univ. Leipzig)
+  ou do Perseus Digital Library (canonical-greekLit), licença **CC BY-SA 4.0**
+  (<https://creativecommons.org/licenses/by-sa/4.0/deed.pt-br>). O arquivo de metadados de cada texto,
+  em `scripts/textos/`, indica a edição impressa e o arquivo de origem.
+- **Lemas, morfologia e sintaxe**: corpus GLAUx — *The Greek Language Automated*, de Alek Keersmaekers
+  (KU Leuven), <https://github.com/alekkeersmaekers/glaux>, licença **CC BY-SA 4.0**. Citação pedida pelo
+  autor: Keersmaekers, A. (2021), *The GLAUx corpus: methodological issues in designing a long-term,
+  diverse, multi-layered corpus of Ancient Greek*, Proceedings of LChange 2021, 39–50,
+  doi:10.18653/v1/2021.lchange-1.6.
+- **Números de verbete** do DDGP (só os identificadores, não o conteúdo dos verbetes).
+
+Alterações: alinhamento palavra a palavra entre o texto TEI e os tokens do GLAUx; recomposição em
+palavras gráficas de crases e compostos que o GLAUx divide; correção de alguns lemas (lista em
+`LEMMA_FIX`, em `scripts/build_text.py`); tradução das etiquetas morfológicas e sintáticas para o
+português na interface. Os arquivos de `docs/textos/` são distribuídos sob **CC BY-SA 4.0**.

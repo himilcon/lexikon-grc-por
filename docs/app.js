@@ -99,7 +99,8 @@ function buildIndex(data) {
   E.forEach((e, i) => {
     byId.set(e[0], i);
     const hw = e[1];
-    const first = (hw.split(",")[0].trim().split(/\s+/)[0] || hw);
+    let first = (hw.split(",")[0].trim().split(/\s+/)[0] || hw);
+    if (first.indexOf("-", 1) > 0) first = first.split("-")[0];   // ποιέω-ῶ → ποιέω
     const k = normGr(first) || normGr(hw);
     keys[i] = k;
     const a = new Set();
@@ -281,7 +282,10 @@ function viewHome() {
       Digite em grego, com ou sem acentos, ou em transliteração (<i>logos</i>, <i>psyche</i>) ou Beta Code (<i>lo/gos</i>).
       Para buscar pelo significado, escolha <b>Português</b>.</p>
     ${hist.length ? `<h3 class="count">Consultados recentemente</h3><div class="chips">${hist.slice(0, 15).map(chip).join("")}</div>` : ""}
-    <h3 class="count">Experimente</h3><div class="chips">${examples}<a href="#/acaso">ao acaso ↻</a></div>`;
+    <h3 class="count">Experimente</h3><div class="chips">${examples}<a href="#/acaso">ao acaso ↻</a></div>
+    <h3 class="count">Ler textos</h3>
+    <a class="home-texts" href="#/textos"><span lang="grc">Ἀριστοτέλης · Κατηγορίαι</span>
+      <span>Aristóteles, <i>Categorias</i>: toque em cada palavra para ver lema, análise e verbete →</span></a>`;
 }
 
 function viewSearch(mode, q) {
@@ -419,6 +423,13 @@ function viewAbout() {
     <p><b>Português</b>: procura nos significados (todas as palavras digitadas precisam aparecer).</p>
     <p>Dentro de um verbete, toque numa palavra grega para procurá-la e numa abreviatura (<i>hom.</i>, <i>aor.</i>…) para ver o que significa.</p>
 
+    <h3>Textos</h3>
+    <p>Em <a href="#/textos">Textos</a>, cada palavra é clicável: o painel mostra o lema, a análise morfológica e sintática
+      e o verbete do DDGP. Texto grego do <a href="https://github.com/OpenGreekAndLatin/First1KGreek" target="_blank" rel="noopener">First1KGreek</a>
+      e anotação do <a href="https://github.com/alekkeersmaekers/glaux" target="_blank" rel="noopener">GLAUx</a> (A. Keersmaekers, KU Leuven),
+      ambos CC BY-SA 4.0. A anotação é automática e pode conter erros, sobretudo na sintaxe.
+      No teclado: <code>←</code> <code>→</code> mudam de palavra, <code>Esc</code> fecha o painel.</p>
+
     <h3>Instalar no iPhone / iPad</h3>
     <p>No Safari, toque em <b>Compartilhar</b> → <b>Adicionar à Tela de Início</b>. Depois do primeiro carregamento o dicionário funciona sem internet.</p>
 
@@ -441,7 +452,10 @@ function route() {
   const [r, ...rest] = h.split("/");
   const arg = rest.join("/");
   if (r !== "grc" && r !== "por") hint.innerHTML = "";
+  if (r !== "t" && typeof leaveReader === "function") leaveReader();
   switch (r) {
+    case "textos": viewTexts(); break;
+    case "t": viewReader(rest[0], rest.slice(1).join("/")); break;
     case "v": viewEntry(arg); break;
     case "w": viewWord(normGr(arg)); break;
     case "grc": case "por": viewSearch(r, arg); break;

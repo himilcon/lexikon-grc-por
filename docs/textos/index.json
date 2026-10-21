@@ -1,0 +1,14 @@
+{
+ "textos": [
+  {
+   "id": "aristoteles-categorias",
+   "autor": "Aristóteles",
+   "autorGr": "Ἀριστοτέλης",
+   "titulo": "Categorias",
+   "tituloGr": "Κατηγορίαι",
+   "descricao": "O primeiro tratado do Órganon: homônimos, sinônimos e parônimos; as dez categorias (substância, quantidade, relação, qualidade, ação, paixão, lugar, tempo, posição, posse); os opostos e os chamados Postpraedicamenta.",
+   "palavras": 10316,
+   "versao": "b71254193b"
+  }
+ ]
+}
