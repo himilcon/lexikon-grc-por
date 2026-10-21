@@ -91,6 +91,17 @@ LEMMA_FIX = {
     "τοσονδί": "τοσόσδε", "ὁπόσης": "ὁπόσος",
     "ὁσποιᾳοῦν": "ὁποῖος", "ὁσποσιαιοῦν": "ὁποῖος", "ὁποιαιοῦν": "ὁποῖος", "ὁποιοσοῦν": "ὁποῖος",
     "ἀδΐος": "ἀΐδιος", "ἐν-ὑπάρχω": "ἐνυπάρχω", "πηρψνις": "Φρῦνις",
+    # Platão
+    "νυνδί": "νῦν",            # νυνδή (νῦν δή)
+    "ποτόν": "ποτός", "μοῦσαι": "μοῦσα", "λαλεπῶς": "χαλεπῶς", "διανοόω": "διανοέομαι",
+    "καθαρ́νω": "καθαίρω", "μιμέω": "μιμέομαι", "ζηλέω": "ζηλόω", "βιάζομαι": "βιάζω",
+    "ἀφιέω": "ἀφίημι", "παριέω": "παρίημι", "ἐφιέω": "ἐφίημι", "μέστε": "μέχρι",
+    "φυλαττοέρχομαι": "φυλάσσω", "συστραεύω": "συστρατεύω", "κικτῄͅσκω": "κτάομαι",
+    "περιφύζω": "περιφύω", "περιανέω": "περαίνω", "πεπονθέω": "πάσχω", "γενοῖμαι": "γίγνομαι",
+    "τοουτον́ς": "τοιοῦτος", "τοσησδὶ": "τοσόσδε", "τητηνν": "τις", "εἰμικτετμή": "ἐκτέμνω",
+    "ἐνεγκατόω": "φέρω", "διαγνοέω": "διαγιγνώσκω", "κηρα": "κήρ", "κήρα": "κήρ",
+    "μυάω": "μυέω", "ἐγκαθανδάνω": "ἐγκαταδέω", "λύκων": "λύκος", "κέβητος": "Κέβης",
+    "νεουογός": "νεουργός", "εἰσκοπόω": "σκοπέω", "Φαῖδρας": "Φαῖδρος", "ἀνειπεῖν": "ἀνεῖπον",
 }
 
 
@@ -103,16 +114,37 @@ def load_ddgp(path):
         tok = re.sub(r"[\d¹²³⁴]+$", "", tok)
         if "-" in tok[1:]:
             tok = tok.split("-")[0] or tok          # ποιέω-ῶ → ποιέω
-        a, b = accented(tok), bare(tok)
-        if not b:
-            continue
         rank = 1 if FORMREF.search(definition) else 0
-        by_acc.setdefault(a, []).append((rank, eid))
-        by_bare.setdefault(b, []).append((rank, eid))
+        # παντάπασι(ν): indexa as duas grafias
+        for t in ({tok.replace("(ν)", ""), tok.replace("(ν)", "ν")} if "(ν)" in tok else {tok}):
+            a, b = accented(t), bare(t)
+            if not b:
+                continue
+            by_acc.setdefault(a, []).append((rank, eid))
+            by_bare.setdefault(b, []).append((rank, eid))
     for d in (by_acc, by_bare):
         for k in d:
             d[k] = [eid for _, eid in sorted(d[k])]
     return by_acc, by_bare
+
+
+def variants(b):
+    """Grafias alternativas de um lema (sem diacríticos) para procurar no DDGP, na ordem de tentativa."""
+    base = [b]
+    if b.endswith("ν"):
+        base.append(b[:-1])                          # ν eufônico: ἔμπροσθεν → ἔμπροσθε
+    if "σσ" in b:
+        base.append(b.replace("σσ", "ττ"))           # jônico/koiné σσ → ático ττ
+    if "ειγν" in b:
+        base.append(b.replace("ειγν", "ιγν"))        # συμμείγνυμι → συμμίγνυμι
+    out = []
+    for v in base:
+        out.append(v)
+        if v.endswith("ομαι"):                       # voz: μαντεύομαι → μαντεύω
+            out.append(v[:-4] + "ω")
+        elif v.endswith("ω"):                        # voz: χαρίζω → χαρίζομαι
+            out.append(v[:-1] + "ομαι")
+    return out[1:]
 
 
 def ddgp_ids(lemma, form, by_acc, by_bare):
@@ -122,10 +154,8 @@ def ddgp_ids(lemma, form, by_acc, by_bare):
             continue
         a, b = accented(key), bare(key)
         ids = by_acc.get(a) or by_bare.get(b)
-        if not ids and b.endswith("ν"):              # ν eufônico: ἔμπροσθεν → ἔμπροσθε
-            ids = by_acc.get(a[:-1]) or by_bare.get(b[:-1])
-        if not ids and "σσ" in b:                    # jônico/koiné σσ → ático ττ
-            ids = by_acc.get(a.replace("σσ", "ττ")) or by_bare.get(b.replace("σσ", "ττ"))
+        if not ids:
+            ids = next((by_bare[v] for v in variants(b) if v in by_bare), None)
         if ids:
             pref = PREFERRED.get(nfc(key))
             if pref in ids:
@@ -149,6 +179,7 @@ def tei_blocks(path, meta):
     Os níveis de divisão e seus nomes vêm de meta["niveis"]; por omissão, um só nível, "Capítulo".
     """
     levels = meta.get("niveis") or [{"nome": "Capítulo"}]
+    skip_divs = set(meta.get("ignorarDivisoes") or [])   # ex.: as páginas de Stephanus, que viram só marcos
     root = ET.parse(path).getroot()
     body = root.find(f".//{TEI}body")
     blocks = []
@@ -165,7 +196,13 @@ def tei_blocks(path, meta):
             d = ref if state["newpage"] else n
             state["newpage"] = False
             return {"s": ref, "d": d}
-        return {"s": ".".join(state["path"] + [n])}  # seção numerada (capítulo.seção)
+        if unit == "section" and (ch.get("resp") or "").lower() == "stephanus":
+            return {"s": n, "d": n}                  # página e seção de Stephanus (17a, 327b)
+        if unit == "section":
+            return {"s": ".".join(state["path"] + [n])}  # seção numerada (capítulo.seção)
+        if unit == "para":                          # novo parágrafo / nova fala no diálogo
+            return {"br": 1}
+        return None                                 # outros marcos (speech, card…) não aparecem
 
     def emit_text(items, s):
         if s:
@@ -199,6 +236,10 @@ def tei_blocks(path, meta):
                 items.append({"br": 1})
             elif tag == "lb":
                 items.append(" ")
+            elif tag == "label":                      # nome do interlocutor (ΑΠΟΛ.): exibido, não analisado
+                items.append({"lab": re.sub(r"\s+", " ", "".join(ch.itertext())).strip()})
+                emit_text(items, ch.tail)
+                continue
             else:
                 walk(ch, items)
             emit_text(items, ch.tail)
@@ -213,7 +254,7 @@ def tei_blocks(path, meta):
         for ch in el:
             tag = ch.tag.replace(TEI, "")
             if tag == "div":
-                if ch.get("type") == "textpart":
+                if ch.get("type") == "textpart" and ch.get("subtype") not in skip_divs:
                     state["path"] = state["path"][:depth] + [ch.get("n")]
                     rot, chip = label(depth, ch.get("n"))
                     blocks.append({"t": "c", "c": ".".join(state["path"]), "lv": depth, "rot": rot, "chip": chip})
@@ -285,11 +326,15 @@ def split_words(blocks):
         tidy = []
         for it in merged:
             if isinstance(it, dict) and "br" in it:
+                # recua sobre espaços e marcos de referência: a quebra vem antes deles
                 k = len(tidy) - 1
-                while k >= 0 and isinstance(tidy[k], str) and not tidy[k].strip():
+                while k >= 0 and ((isinstance(tidy[k], str) and not tidy[k].strip())
+                                  or (isinstance(tidy[k], dict) and ("s" in tidy[k] or "pb" in tidy[k]))):
                     k -= 1
                 if k < 0 or (isinstance(tidy[k], dict) and "br" in tidy[k]):
                     continue
+                tidy.insert(k + 1, it)
+                continue
             elif isinstance(it, str) and tidy and isinstance(tidy[-1], dict) and "br" in tidy[-1]:
                 m = re.match(r"\s*([,.·;:)\]⟩—]+)", it)
                 if m:

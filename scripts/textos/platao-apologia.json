@@ -1,0 +1,31 @@
+{
+  "id": "platao-apologia",
+  "autor": "Platão",
+  "autorGr": "Πλάτων",
+  "titulo": "Apologia de Sócrates",
+  "tituloGr": "Ἀπολογία Σωκράτους",
+  "cts": "urn:cts:greekLit:tlg0059.tlg002",
+  "edicao": "Platonis Opera, tomo I, ed. John Burnet. Oxford: Clarendon Press, 1900 (reimpr. 1905).",
+  "edicaoCurta": "Burnet",
+  "referencia": "Stephanus",
+  "exemploRef": "40c",
+  "ignorarDivisoes": [
+    "section"
+  ],
+  "fonteTexto": {
+    "nome": "Perseus Digital Library (canonical-greekLit)",
+    "url": "https://github.com/PerseusDL/canonical-greekLit/blob/master/data/tlg0059/tlg002/tlg0059.tlg002.perseus-grc2.xml",
+    "arquivo": "data/tlg0059/tlg002/tlg0059.tlg002.perseus-grc2.xml",
+    "licenca": "CC BY-SA 4.0"
+  },
+  "fonteAnotacao": {
+    "nome": "GLAUx (A. Keersmaekers, KU Leuven), sobre o treebank manual de Vanessa Gorman (Ancient Greek Prose Dependency Treebanks)",
+    "url": "https://github.com/alekkeersmaekers/glaux",
+    "arquivo": "xml/0059-002.xml",
+    "licenca": "CC BY-NC-SA 4.0",
+    "nota": "Lemas, morfologia e sintaxe anotados manualmente por V. Gorman (treebank), harmonizados pelo GLAUx; mais confiáveis que a anotação automática dos outros textos."
+  },
+  "notaEdicao": "As referências à margem são as de Stephanus (página e seção, ex. 17a), padrão para citar Platão. Uma quebra de linha marca cada nova fala ou parágrafo. Entre [ ] estão as palavras que Burnet considera interpoladas; entre ⟨ ⟩, as que ele acrescenta.",
+  "descricao": "A defesa de Sócrates diante do tribunal de Atenas, em 399 a.C.: a resposta às acusações antigas e às de Meleto, a missão recebida do oráculo de Delfos, a contraproposta de pena e as palavras finais aos juízes.",
+  "anotacaoManual": true
+}

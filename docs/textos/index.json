@@ -9,7 +9,7 @@
    "descricao": "O primeiro tratado do Órganon: homônimos, sinônimos e parônimos; as dez categorias (substância, quantidade, relação, qualidade, ação, paixão, lugar, tempo, posição, posse); os opostos e os chamados Postpraedicamenta.",
    "edicaoCurta": "Bekker, 1837",
    "palavras": 10316,
-   "versao": "3ae9f17022"
+   "versao": "6f74457996"
   },
   {
    "id": "aristoteles-metafisica",
@@ -20,7 +20,62 @@
    "descricao": "Os catorze livros sobre a “filosofia primeira”: as causas e os princípios (Α), as aporias (Β), o ser enquanto ser e o princípio de não contradição (Γ), o léxico filosófico (Δ), a substância (Ζ, Η), ato e potência (Θ) e o primeiro motor imóvel (Λ).",
    "edicaoCurta": "Ross, 1924",
    "palavras": 78946,
-   "versao": "8fcce043d0"
+   "versao": "4d97f243b3"
+  },
+  {
+   "id": "platao-apologia",
+   "autor": "Platão",
+   "autorGr": "Πλάτων",
+   "titulo": "Apologia de Sócrates",
+   "tituloGr": "Ἀπολογία Σωκράτους",
+   "descricao": "A defesa de Sócrates diante do tribunal de Atenas, em 399 a.C.: a resposta às acusações antigas e às de Meleto, a missão recebida do oráculo de Delfos, a contraproposta de pena e as palavras finais aos juízes.",
+   "edicaoCurta": "Burnet",
+   "palavras": 8752,
+   "versao": "1c585966f3"
+  },
+  {
+   "id": "platao-menon",
+   "autor": "Platão",
+   "autorGr": "Πλάτων",
+   "titulo": "Mênon",
+   "tituloGr": "Μένων",
+   "descricao": "Pode a virtude ser ensinada? Sócrates e Mênon buscam definir a virtude; o paradoxo da investigação, a reminiscência demonstrada com o escravo e o problema do duplo do quadrado, e a distinção entre opinião verdadeira e conhecimento.",
+   "edicaoCurta": "Burnet",
+   "palavras": 9703,
+   "versao": "e0620bafa6"
+  },
+  {
+   "id": "platao-banquete",
+   "autor": "Platão",
+   "autorGr": "Πλάτων",
+   "titulo": "Banquete",
+   "tituloGr": "Συμπόσιον",
+   "descricao": "Os discursos em louvor de Eros no banquete de Agatão: Fedro, Pausânias, Erixímaco, Aristófanes (o mito dos andróginos), Agatão, Sócrates relatando a lição de Diotima, e a entrada de Alcibíades.",
+   "edicaoCurta": "Burnet",
+   "palavras": 17349,
+   "versao": "80de9d3b62"
+  },
+  {
+   "id": "platao-fedon",
+   "autor": "Platão",
+   "autorGr": "Πλάτων",
+   "titulo": "Fédon",
+   "tituloGr": "Φαίδων",
+   "descricao": "O último dia de Sócrates na prisão: a filosofia como preparação para a morte, os argumentos da imortalidade da alma (contrários, reminiscência, afinidade, a forma da vida), o mito final e a morte de Sócrates.",
+   "edicaoCurta": "Burnet",
+   "palavras": 22356,
+   "versao": "4ab4c760bc"
+  },
+  {
+   "id": "platao-republica",
+   "autor": "Platão",
+   "autorGr": "Πλάτων",
+   "titulo": "República",
+   "tituloGr": "Πολιτεία",
+   "descricao": "Os dez livros sobre a justiça: a discussão com Trasímaco, a cidade ideal e suas classes, a alma tripartida, os reis-filósofos, o Sol, a Linha dividida e a Caverna, as formas de governo, a crítica da poesia e o mito de Er.",
+   "edicaoCurta": "Burnet",
+   "palavras": 88265,
+   "versao": "ed9cbfcaf6"
   }
  ]
 }

@@ -284,8 +284,9 @@ function viewHome() {
     ${hist.length ? `<h3 class="count">Consultados recentemente</h3><div class="chips">${hist.slice(0, 15).map(chip).join("")}</div>` : ""}
     <h3 class="count">Experimente</h3><div class="chips">${examples}<a href="#/acaso">ao acaso ↻</a></div>
     <h3 class="count">Ler textos</h3>
-    <a class="home-texts" href="#/textos"><span lang="grc">Ἀριστοτέλης · Κατηγορίαι · Τὰ μετὰ τὰ φυσικά</span>
-      <span>Aristóteles, <i>Categorias</i> e <i>Metafísica</i>: toque em cada palavra para ver lema, análise e verbete →</span></a>`;
+    <a class="home-texts" href="#/textos"><span lang="grc">Πλάτων · Ἀριστοτέλης</span>
+      <span>Platão (<i>Apologia</i>, <i>Mênon</i>, <i>Banquete</i>, <i>Fédon</i>, <i>República</i>) e Aristóteles (<i>Categorias</i>, <i>Metafísica</i>):
+        toque em cada palavra para ver lema, análise e verbete →</span></a>`;
 }
 
 function viewSearch(mode, q) {
@@ -429,8 +430,9 @@ function viewAbout() {
       e anotação do <a href="https://github.com/alekkeersmaekers/glaux" target="_blank" rel="noopener">GLAUx</a> (A. Keersmaekers, KU Leuven),
       ambos CC BY-SA 4.0. A anotação é automática e pode conter erros, sobretudo na sintaxe.
       No teclado: <code>←</code> <code>→</code> mudam de palavra, <code>Esc</code> fecha o painel.
-      Nas obras de Aristóteles editadas com a numeração de Bekker, o campo <b>Bekker</b> leva direto a uma passagem
-      (<code>1072b14</code>, <code>1028a</code>), e o link <code>…/#/t/aristoteles-metafisica/1072b14</code> também funciona.</p>
+      O campo de referência leva direto a uma passagem: numeração de <b>Stephanus</b> em Platão (<code>514a</code>, <code>40c</code>)
+      e de <b>Bekker</b> em Aristóteles (<code>1072b14</code>, <code>1028a</code>); links como
+      <code>…/#/t/platao-republica/514a</code> também funcionam.</p>
 
     <h3>Instalar no iPhone / iPad</h3>
     <p>No Safari, toque em <b>Compartilhar</b> → <b>Adicionar à Tela de Início</b>. Depois do primeiro carregamento o dicionário funciona sem internet.</p>

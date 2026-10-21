@@ -311,3 +311,8 @@ body.reading main { max-width: 1240px; }
   body.reading.panel-open .rsrc { padding-bottom: 58vh; }
   .rtext { font-size: 20px; }
 }
+
+.tauthor { font-size: 13px; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-soft); margin: 14px 0 -4px; }
+.tauthor span { text-transform: none; letter-spacing: 0; font-size: 15px; margin-left: 6px; }
+.rtext .lab { font-size: 15px; letter-spacing: .08em; color: var(--accent); }
+.rcaps:not(:has(a)) { display: none; }

@@ -1,0 +1,30 @@
+{
+  "id": "platao-banquete",
+  "autor": "Platão",
+  "autorGr": "Πλάτων",
+  "titulo": "Banquete",
+  "tituloGr": "Συμπόσιον",
+  "cts": "urn:cts:greekLit:tlg0059.tlg011",
+  "edicao": "Platonis Opera, tomo II, ed. John Burnet. Oxford: Clarendon Press, 1901 (reimpr. 1910).",
+  "edicaoCurta": "Burnet",
+  "referencia": "Stephanus",
+  "exemploRef": "201d",
+  "ignorarDivisoes": [
+    "section"
+  ],
+  "fonteTexto": {
+    "nome": "Perseus Digital Library (canonical-greekLit)",
+    "url": "https://github.com/PerseusDL/canonical-greekLit/blob/master/data/tlg0059/tlg011/tlg0059.tlg011.perseus-grc2.xml",
+    "arquivo": "data/tlg0059/tlg011/tlg0059.tlg011.perseus-grc2.xml",
+    "licenca": "CC BY-SA 4.0"
+  },
+  "fonteAnotacao": {
+    "nome": "GLAUx — The Greek Language Automated (A. Keersmaekers, KU Leuven)",
+    "url": "https://github.com/alekkeersmaekers/glaux",
+    "arquivo": "xml/0059-011.xml",
+    "licenca": "CC BY-SA 4.0",
+    "nota": "Lemas, morfologia e sintaxe anotados automaticamente (precisão informada pelo projeto: lemas 98,8%, morfologia 97,2%, sintaxe ~80%)."
+  },
+  "notaEdicao": "As referências à margem são as de Stephanus (página e seção, ex. 17a), padrão para citar Platão. Uma quebra de linha marca cada nova fala ou parágrafo. Entre [ ] estão as palavras que Burnet considera interpoladas; entre ⟨ ⟩, as que ele acrescenta.",
+  "descricao": "Os discursos em louvor de Eros no banquete de Agatão: Fedro, Pausânias, Erixímaco, Aristófanes (o mito dos andróginos), Agatão, Sócrates relatando a lição de Diotima, e a entrada de Alcibíades."
+}

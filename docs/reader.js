@@ -89,7 +89,9 @@ async function loadText(id) {
 /* Divide o texto em partes (livros) e indexa referências → parte.
    Texto com um só nível de divisão (as Categorias) é uma parte só. */
 function indexText(doc) {
-  doc.paged = doc.blocos.some(b => b.t === "c" && b.lv > 0);
+  // um livro por vez quando a obra se divide em livros (Metafísica, República) ou tem dois níveis
+  const top = (doc.meta.niveis || [])[0];
+  doc.paged = doc.blocos.some(b => b.t === "c" && b.lv > 0) || !!(top && top.nome === "Livro");
   doc.parts = []; doc.chapters = [];
   doc.refPart = new Map(); doc.refs = [];
   let wi = 0, cur = null;
@@ -129,11 +131,14 @@ async function viewTexts() {
     main.innerHTML = `<div class="empty">Não foi possível carregar a lista de textos (${esc(String(err.message || err))}).</div>`;
     return;
   }
+  let lastAuthor = null;
   const cards = idx.textos.map(t => {
+    const head = t.autor !== lastAuthor ? `<li class="tauthor" lang="pt">${esc(t.autor)} <span lang="grc">${esc(t.autorGr)}</span></li>` : "";
+    lastAuthor = t.autor;
     const pos = store.get("lx.read." + t.id, null);
-    return `<li class="tcard">
+    return head + `<li class="tcard">
       <a href="#/t/${t.id}">
-        <span class="tcard-gr" lang="grc">${esc(t.autorGr)} · ${esc(t.tituloGr)}</span>
+        <span class="tcard-gr" lang="grc">${esc(t.tituloGr)}</span>
         <span class="tcard-pt">${esc(t.autor)}, <i>${esc(t.titulo)}</i></span>
         <span class="tcard-desc">${esc(t.descricao)}</span>
         <span class="tcard-meta">${t.edicaoCurta ? esc(t.edicaoCurta) + " · " : ""}${t.palavras.toLocaleString("pt-BR")} palavras${pos ? ` · parou em ${esc(/^\d+[ab]/.test(pos) ? pos : "§" + pos)}` : ""}</span>
@@ -143,7 +148,8 @@ async function viewTexts() {
     <h2>Textos</h2>
     <p class="home-intro">Toque numa palavra para ver o lema, a análise morfológica e o verbete do dicionário.
       As análises vêm do corpus <a href="https://github.com/alekkeersmaekers/glaux" target="_blank" rel="noopener">GLAUx</a>
-      e são automáticas: confira-as, sobretudo a sintaxe.</p>
+      e são, em geral, automáticas: confira-as, sobretudo a sintaxe. A <i>Apologia</i> é exceção: sua anotação foi feita à mão
+      (treebank de Vanessa Gorman).</p>
     <ul class="tlist">${cards}</ul>
   </div>`;
 }
@@ -223,7 +229,6 @@ function renderReader() {
   const { doc } = R;
   const m = doc.meta;
   const last = store.get("lx.read." + R.id, null);
-  const bekker = m.referencia === "Bekker";
   main.innerHTML = `
     <div class="reader">
       <div class="rcol">
@@ -235,7 +240,7 @@ function renderReader() {
             : doc.chapters.map(c => `<a href="#/t/${R.id}/${esc(c.c)}">${esc(c.chip)}</a>`).join("")}</nav>
           ${doc.paged ? `<nav class="rcaps rsub" id="rchaps" data-label="Capítulos" aria-label="Capítulos"></nav>` : ""}
           <div class="rtools">
-            ${bekker ? `<form class="rgo" id="rgo"><input id="rgo-in" placeholder="Bekker: 1072b" aria-label="Ir para a referência de Bekker" autocomplete="off" spellcheck="false" inputmode="text"><button>ir</button></form>` : ""}
+            ${m.referencia ? `<form class="rgo" id="rgo"><input id="rgo-in" placeholder="${esc(m.referencia)}: ${esc(m.exemploRef || "")}" aria-label="Ir para a referência de ${esc(m.referencia)}" autocomplete="off" spellcheck="false" inputmode="text"><button>ir</button></form>` : ""}
             ${last ? `<a class="rcont" href="#/t/${R.id}/${esc(last)}">continuar em ${esc(refLabel(last))} →</a>` : ""}
           </div>
         </header>
@@ -281,6 +286,7 @@ function showPart(p) {
       if (typeof it === "string") inner += esc(it);
       else if (Array.isArray(it)) inner += `<span class="w${it[1].length ? "" : " nx"}" data-i="${wi++}">${esc(it[0])}</span>`;
       else if (it.br) inner += "<br>";
+      else if (it.lab) inner += `<span class="lab">${esc(it.lab)}</span> `;
       else if (it.s) {
         const bk = isBekker(it.s);
         const lab = it.d || it.s.split(".").pop();
@@ -441,7 +447,9 @@ function renderPanel() {
     </div>
     ${rows ? `<div class="ans">${rows}</div>` : ""}
     ${entryHtml}
-    <div class="rp-note">Análise automática (GLAUx): lemas ≈ 99%, morfologia ≈ 97%, sintaxe ≈ 80% de acerto.</div>`;
+    <div class="rp-note">${R.doc.meta.anotacaoManual
+      ? "Análise manual (treebank de Vanessa Gorman, harmonizado pelo GLAUx)."
+      : "Análise automática (GLAUx): lemas ≈ 99%, morfologia ≈ 97%, sintaxe ≈ 80% de acerto."}</div>`;
   p.hidden = false;
   p.scrollTop = 0;
   document.body.classList.add("panel-open");

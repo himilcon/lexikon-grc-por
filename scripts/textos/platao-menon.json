@@ -1,0 +1,30 @@
+{
+  "id": "platao-menon",
+  "autor": "Platão",
+  "autorGr": "Πλάτων",
+  "titulo": "Mênon",
+  "tituloGr": "Μένων",
+  "cts": "urn:cts:greekLit:tlg0059.tlg024",
+  "edicao": "Platonis Opera, tomo III, ed. John Burnet. Oxford: Clarendon Press, 1903.",
+  "edicaoCurta": "Burnet",
+  "referencia": "Stephanus",
+  "exemploRef": "82b",
+  "ignorarDivisoes": [
+    "section"
+  ],
+  "fonteTexto": {
+    "nome": "Perseus Digital Library (canonical-greekLit)",
+    "url": "https://github.com/PerseusDL/canonical-greekLit/blob/master/data/tlg0059/tlg024/tlg0059.tlg024.perseus-grc2.xml",
+    "arquivo": "data/tlg0059/tlg024/tlg0059.tlg024.perseus-grc2.xml",
+    "licenca": "CC BY-SA 4.0"
+  },
+  "fonteAnotacao": {
+    "nome": "GLAUx — The Greek Language Automated (A. Keersmaekers, KU Leuven)",
+    "url": "https://github.com/alekkeersmaekers/glaux",
+    "arquivo": "xml/0059-024.xml",
+    "licenca": "CC BY-SA 4.0",
+    "nota": "Lemas, morfologia e sintaxe anotados automaticamente (precisão informada pelo projeto: lemas 98,8%, morfologia 97,2%, sintaxe ~80%)."
+  },
+  "notaEdicao": "As referências à margem são as de Stephanus (página e seção, ex. 17a), padrão para citar Platão. Uma quebra de linha marca cada nova fala ou parágrafo. Entre [ ] estão as palavras que Burnet considera interpoladas; entre ⟨ ⟩, as que ele acrescenta.",
+  "descricao": "Pode a virtude ser ensinada? Sócrates e Mênon buscam definir a virtude; o paradoxo da investigação, a reminiscência demonstrada com o escravo e o problema do duplo do quadrado, e a distinção entre opinião verdadeira e conhecimento."
+}

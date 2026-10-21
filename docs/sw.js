@@ -1,6 +1,6 @@
 /* Service worker: guarda a aplicação, o dicionário e os textos para uso offline.
    Três caches separados, para que atualizar a aplicação não obrigue a baixar de novo o dicionário (8 MB). */
-const VERSION = "lx-v4";                    // aplicação: mude a cada alteração de HTML/CSS/JS
+const VERSION = "lx-v5";                    // aplicação: mude a cada alteração de HTML/CSS/JS
 const DATA_CACHE = "lx-data-2022-3x-1";     // dicionário: mude junto com DATA
 const TEXT_CACHE = "lx-textos";             // textos: cada arquivo vai com ?v=<versão> no endereço
 const SHELL = ["./", "index.html", "styles.css", "app.js", "keyboard.js", "reader.js", "manifest.webmanifest",

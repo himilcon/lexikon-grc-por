@@ -83,6 +83,15 @@ Textos disponíveis:
 |---|---|---|
 | Aristóteles, *Categorias* (Κατηγορίαι) | Bekker, Oxford 1837 (First1KGreek) | 10 316 |
 | Aristóteles, *Metafísica* (Τὰ μετὰ τὰ φυσικά) | Ross, Oxford 1924 (Perseus) | 78 946 |
+| Platão, *Apologia de Sócrates* (Ἀπολογία Σωκράτους) | Burnet (Perseus) — anotação **manual** | 8 752 |
+| Platão, *Mênon* (Μένων) | Burnet (Perseus) | 9 703 |
+| Platão, *Banquete* (Συμπόσιον) | Burnet (Perseus) | 17 349 |
+| Platão, *Fédon* (Φαίδων) | Burnet (Perseus) | 22 356 |
+| Platão, *República* (Πολιτεία) | Burnet (Perseus) | 88 265 |
+
+Em Platão, a margem traz a paginação de **Stephanus** (17a, 514a), e o campo de referência leva direto
+a ela; cada nova fala ou parágrafo começa em linha nova, com o nome do interlocutor (ΣΩ., ΜΕΝ.) quando
+o TEI o traz. A *República* é mostrada um livro por vez.
 
 Obras divididas em livros (a *Metafísica*) são mostradas **um livro por vez**, com navegação por livro
 (Α, α, Β… Ν) e por capítulo; a contagem e a navegação entre ocorrências de um lema valem para a obra
@@ -107,12 +116,21 @@ pelas letras sem diacríticos; a ortografia exibida é sempre a do TEI. Resultad
 | Texto | Palavras com análise | Lemas sem verbete no DDGP | Ocorrências sem verbete |
 |---|---|---|---|
 | *Categorias* | 10 315 de 10 316 (falta o título) | 18 de 622 | 66 (0,6%) |
-| *Metafísica* | 78 706 de 78 946 (as 238 excluídas por Ross + 2) | 220 de 2 159 | 670 (0,9%) |
+| *Metafísica* | 78 706 de 78 946 (as 238 excluídas por Ross + 2) | 216 de 2 159 | 666 (0,8%) |
+| *Apologia* | 8 747 de 8 752 | 28 de 1 069 | 45 (0,5%) |
+| *Mênon* | 9 689 de 9 703 | 26 de 914 | 55 (0,6%) |
+| *Banquete* | 17 347 de 17 349 | 70 de 1 904 | 142 (0,8%) |
+| *Fédon* | 22 274 de 22 356 | 27 de 1 899 | 43 (0,2%) |
+| *República* | 88 204 de 88 265 | 291 de 4 628 | 385 (0,4%) |
+
+As palavras sem análise são, em geral, as que o editor exclui ([ ]) ou variantes ausentes da versão do
+texto usada pelo GLAUx; o painel as procura diretamente no dicionário.
 
 Os lemas sem verbete são sobretudo termos técnicos (ἐντελέχεια, ἀντίφασις, ἀδιαίρετος, κατάφασις) e
 nomes próprios (Ἐμπεδοκλῆς, Δημόκριτος); para esses o painel oferece um link ao Logeion.
 Quando o lema do GLAUx não está no DDGP, o conversor tenta também a forma do texto, a grafia sem ν
-eufônico (ἔμπροσθεν → ἔμπροσθε) e a forma ática com ττ.
+eufônico (ἔμπροσθεν → ἔμπροσθε), a forma ática com ττ, a outra voz do verbo (μαντεύομαι → μαντεύω,
+χαρίζω → χαρίζομαι) e μίγνυμι por μείγνυμι; verbetes como `παντάπασι(ν)` são indexados nas duas grafias.
 Alguns lemas do GLAUx são corrigidos em `LEMMA_FIX`, e homógrafos frequentes têm o verbete preferido
 fixado em `PREFERRED`, ambos em `scripts/build_text.py`.
 
@@ -122,8 +140,9 @@ fixado em `PREFERRED`, ambos em `scripts/build_text.py`.
    (ex.: `0086-006` = Aristóteles, *Categorias*). Confira a coluna `SOURCE_LICENSE`.
 2. Ache o TEI correspondente no First1KGreek ou no Perseus (`data/tlgXXXX/tlgYYY/…grc*.xml`).
 3. Crie `scripts/textos/<id>.json` com os metadados (copie o das *Categorias* para obras de um só nível,
-   ou o da *Metafísica* para obras em livros e capítulos: `niveis` dá o nome de cada nível e os rótulos
-   dos livros; `referencia: "Bekker"` ativa o campo de busca por Bekker).
+   ou o da *Metafísica* para obras em livros e capítulos, ou o de um diálogo de Platão: `niveis` dá o
+   nome de cada nível e os rótulos dos livros; `ignorarDivisoes` evita que divisões de página virem
+   capítulos; `referencia` (`"Bekker"`, `"Stephanus"`) e `exemploRef` ativam o campo de referência).
 4. Rode o conversor e confira, na lista que ele imprime, os lemas sem verbete: lemas malformados pelo
    lematizador (ex.: `ἔρχοναι` para εἶναι) vão para `LEMMA_FIX`.
 5. Gere o arquivo:
@@ -163,6 +182,7 @@ Correções lexicográficas devem ser enviadas ao projeto original.
 > distribuído gratuitamente, mas não vendido nem monetizado.
 
 **Textos e anotações** (`docs/textos/`): texto grego do First1KGreek/Perseus e anotação do GLAUx,
-ambos **CC BY-SA 4.0**; os arquivos derivados seguem a mesma licença — ver [`LICENSE-DATA.md`](LICENSE-DATA.md).
+**CC BY-SA 4.0**, com uma exceção: a *Apologia*, cuja anotação vem do treebank de Vanessa Gorman,
+**CC BY-NC-SA 4.0** — ver [`LICENSE-DATA.md`](LICENSE-DATA.md).
 
 **Código** (HTML, CSS, JS, scripts): licença MIT — ver [`LICENSE`](LICENSE).

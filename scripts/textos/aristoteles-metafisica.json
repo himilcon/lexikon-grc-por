@@ -11,12 +11,42 @@
   "niveis": [
     {
       "nome": "Livro",
-      "rotulos": {"1": "Α", "2": "α", "3": "Β", "4": "Γ", "5": "Δ", "6": "Ε", "7": "Ζ",
-                  "8": "Η", "9": "Θ", "10": "Ι", "11": "Κ", "12": "Λ", "13": "Μ", "14": "Ν"},
-      "extra": {"1": "I", "2": "II", "3": "III", "4": "IV", "5": "V", "6": "VI", "7": "VII",
-                "8": "VIII", "9": "IX", "10": "X", "11": "XI", "12": "XII", "13": "XIII", "14": "XIV"}
+      "rotulos": {
+        "1": "Α",
+        "2": "α",
+        "3": "Β",
+        "4": "Γ",
+        "5": "Δ",
+        "6": "Ε",
+        "7": "Ζ",
+        "8": "Η",
+        "9": "Θ",
+        "10": "Ι",
+        "11": "Κ",
+        "12": "Λ",
+        "13": "Μ",
+        "14": "Ν"
+      },
+      "extra": {
+        "1": "I",
+        "2": "II",
+        "3": "III",
+        "4": "IV",
+        "5": "V",
+        "6": "VI",
+        "7": "VII",
+        "8": "VIII",
+        "9": "IX",
+        "10": "X",
+        "11": "XI",
+        "12": "XII",
+        "13": "XIII",
+        "14": "XIV"
+      }
     },
-    {"nome": "Capítulo"}
+    {
+      "nome": "Capítulo"
+    }
   ],
   "fonteTexto": {
     "nome": "Perseus Digital Library (canonical-greekLit)",
@@ -32,5 +62,6 @@
     "nota": "Lemas, morfologia e sintaxe anotados automaticamente (precisão informada pelo projeto: lemas 98,8%, morfologia 97,2%, sintaxe ~80%)."
   },
   "notaEdicao": "Entre [ ] estão as palavras que Ross considera interpoladas; entre ⟨ ⟩, as que ele acrescenta ao texto dos manuscritos. As referências à margem são as de Bekker (página, coluna e linha), padrão para citar Aristóteles.",
-  "descricao": "Os catorze livros sobre a “filosofia primeira”: as causas e os princípios (Α), as aporias (Β), o ser enquanto ser e o princípio de não contradição (Γ), o léxico filosófico (Δ), a substância (Ζ, Η), ato e potência (Θ) e o primeiro motor imóvel (Λ)."
+  "descricao": "Os catorze livros sobre a “filosofia primeira”: as causas e os princípios (Α), as aporias (Β), o ser enquanto ser e o princípio de não contradição (Γ), o léxico filosófico (Δ), a substância (Ζ, Η), ato e potência (Θ) e o primeiro motor imóvel (Λ).",
+  "exemploRef": "1072b"
 }
