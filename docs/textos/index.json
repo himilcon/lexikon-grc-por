@@ -9,7 +9,7 @@
    "descricao": "A “exposição da investigação” de Heródoto de Halicarnasso: as origens do conflito entre gregos e bárbaros, Creso e Ciro, o Egito, Cambises e Dario, os citas, a revolta jônia, Maratona, a invasão de Xerxes, Termópilas, Salamina e Plateia.",
    "edicaoCurta": "Godley, 1920",
    "palavras": 184943,
-   "versao": "f1a88ab73f"
+   "versao": "aaf1232dec"
   },
   {
    "id": "platao-apologia",
@@ -20,7 +20,7 @@
    "descricao": "A defesa de Sócrates diante do tribunal de Atenas, em 399 a.C.: a resposta às acusações antigas e às de Meleto, a missão recebida do oráculo de Delfos, a contraproposta de pena e as palavras finais aos juízes.",
    "edicaoCurta": "Burnet",
    "palavras": 8752,
-   "versao": "8b7c2b25d0"
+   "versao": "621a500a65"
   },
   {
    "id": "platao-menon",
@@ -31,7 +31,7 @@
    "descricao": "Pode a virtude ser ensinada? Sócrates e Mênon buscam definir a virtude; o paradoxo da investigação, a reminiscência demonstrada com o escravo e o problema do duplo do quadrado, e a distinção entre opinião verdadeira e conhecimento.",
    "edicaoCurta": "Burnet",
    "palavras": 9703,
-   "versao": "0f64e74f67"
+   "versao": "d3e13d9870"
   },
   {
    "id": "platao-banquete",
@@ -42,7 +42,7 @@
    "descricao": "Os discursos em louvor de Eros no banquete de Agatão: Fedro, Pausânias, Erixímaco, Aristófanes (o mito dos andróginos), Agatão, Sócrates relatando a lição de Diotima, e a entrada de Alcibíades.",
    "edicaoCurta": "Burnet",
    "palavras": 17349,
-   "versao": "dfbc009735"
+   "versao": "952397ef83"
   },
   {
    "id": "platao-fedon",
@@ -53,7 +53,7 @@
    "descricao": "O último dia de Sócrates na prisão: a filosofia como preparação para a morte, os argumentos da imortalidade da alma (contrários, reminiscência, afinidade, a forma da vida), o mito final e a morte de Sócrates.",
    "edicaoCurta": "Burnet",
    "palavras": 22356,
-   "versao": "1991f42d28"
+   "versao": "743578d653"
   },
   {
    "id": "platao-republica",
@@ -64,7 +64,7 @@
    "descricao": "Os dez livros sobre a justiça: a discussão com Trasímaco, a cidade ideal e suas classes, a alma tripartida, os reis-filósofos, o Sol, a Linha dividida e a Caverna, as formas de governo, a crítica da poesia e o mito de Er.",
    "edicaoCurta": "Burnet",
    "palavras": 88265,
-   "versao": "9511e1314a"
+   "versao": "f912a68e9a"
   },
   {
    "id": "xenofonte-anabase",
@@ -75,7 +75,7 @@
    "descricao": "A expedição de Ciro, o Jovem, contra o irmão Artaxerxes e a retirada dos Dez Mil mercenários gregos, da Babilônia ao mar Negro, narrada por Xenofonte, que os comandou: Cunaxa, a travessia da Armênia e o grito θάλαττα θάλαττα.",
    "edicaoCurta": "Marchant, 1904",
    "palavras": 57195,
-   "versao": "e85b7ffb92"
+   "versao": "4cd7c70b1a"
   },
   {
    "id": "aristoteles-categorias",
@@ -85,8 +85,69 @@
    "tituloGr": "Κατηγορίαι",
    "descricao": "O primeiro tratado do Órganon: homônimos, sinônimos e parônimos; as dez categorias (substância, quantidade, relação, qualidade, ação, paixão, lugar, tempo, posição, posse); os opostos e os chamados Postpraedicamenta.",
    "edicaoCurta": "Bekker, 1837",
+   "colecao": "Órganon",
    "palavras": 10316,
-   "versao": "cb9cbec308"
+   "versao": "a2ea13293b"
+  },
+  {
+   "id": "aristoteles-da-interpretacao",
+   "autor": "Aristóteles",
+   "autorGr": "Ἀριστοτέλης",
+   "titulo": "Da interpretação",
+   "tituloGr": "Περὶ ἑρμηνείας",
+   "descricao": "Nome, verbo, afirmação e negação; a proposição como portadora de verdade e falsidade; os opostos (o quadrado das oposições), a modalidade e, no cap. 9, o problema dos futuros contingentes (a batalha naval de amanhã).",
+   "edicaoCurta": "Bekker, 1837",
+   "colecao": "Órganon",
+   "palavras": 6245,
+   "versao": "5a04864f39"
+  },
+  {
+   "id": "aristoteles-primeiros-analiticos",
+   "autor": "Aristóteles",
+   "autorGr": "Ἀριστοτέλης",
+   "titulo": "Primeiros analíticos",
+   "tituloGr": "Ἀναλυτικὰ πρότερα",
+   "descricao": "A teoria do silogismo: as três figuras e seus modos válidos, a conversão das proposições, os silogismos modais, a descoberta de premissas e a redução às figuras; no livro Β, propriedades e defeitos dos silogismos, a indução e o entimema.",
+   "edicaoCurta": "Bekker, 1837",
+   "colecao": "Órganon",
+   "palavras": 37579,
+   "versao": "a37487fb6d"
+  },
+  {
+   "id": "aristoteles-segundos-analiticos",
+   "autor": "Aristóteles",
+   "autorGr": "Ἀριστοτέλης",
+   "titulo": "Segundos analíticos",
+   "tituloGr": "Ἀναλυτικὰ ὕστερα",
+   "descricao": "A ciência demonstrativa: conhecimento pelas causas, os princípios primeiros e indemonstráveis, a definição e sua relação com a demonstração; termina (Β 19) com a apreensão dos princípios pela indução e pelo νοῦς.",
+   "edicaoCurta": "Bekker, 1837",
+   "colecao": "Órganon",
+   "palavras": 22673,
+   "versao": "0f5771ee10"
+  },
+  {
+   "id": "aristoteles-topicos",
+   "autor": "Aristóteles",
+   "autorGr": "Ἀριστοτέλης",
+   "titulo": "Tópicos",
+   "tituloGr": "Τοπικά",
+   "descricao": "O método dialético para argumentar a partir de opiniões aceitas (ἔνδοξα): os predicáveis (definição, próprio, gênero, acidente), os lugares-comuns (τόποι) para estabelecer e refutar cada um, e a prática do debate (livro Θ).",
+   "edicaoCurta": "Bekker, 1837",
+   "colecao": "Órganon",
+   "palavras": 44125,
+   "versao": "315f5294db"
+  },
+  {
+   "id": "aristoteles-refutacoes-sofisticas",
+   "autor": "Aristóteles",
+   "autorGr": "Ἀριστοτέλης",
+   "titulo": "Refutações sofísticas",
+   "tituloGr": "Περὶ σοφιστικῶν ἐλέγχων",
+   "descricao": "Os argumentos que parecem refutações sem o ser: as falácias dependentes da linguagem (homonímia, anfibolia…) e as independentes dela (acidente, petição de princípio…), e como desfazê-las.",
+   "edicaoCurta": "Bekker, 1837",
+   "colecao": "Órganon",
+   "palavras": 14115,
+   "versao": "9d02e88d1c"
   },
   {
    "id": "aristoteles-metafisica",
@@ -97,7 +158,18 @@
    "descricao": "Os catorze livros sobre a “filosofia primeira”: as causas e os princípios (Α), as aporias (Β), o ser enquanto ser e o princípio de não contradição (Γ), o léxico filosófico (Δ), a substância (Ζ, Η), ato e potência (Θ) e o primeiro motor imóvel (Λ).",
    "edicaoCurta": "Ross, 1924",
    "palavras": 78946,
-   "versao": "ca76e23863"
+   "versao": "b24b10a95f"
+  },
+  {
+   "id": "marco-aurelio-meditacoes",
+   "autor": "Marco Aurélio",
+   "autorGr": "Μᾶρκος Αὐρήλιος",
+   "titulo": "Meditações",
+   "tituloGr": "Τὰ εἰς ἑαυτόν",
+   "descricao": "Os doze livros de notas “para si mesmo” do imperador estoico: o livro I, das dívidas para com mestres e familiares, e reflexões sobre a natureza, a razão (λόγος), a morte, a impermanência e o dever.",
+   "edicaoCurta": "Leopold, 1908",
+   "palavras": 29267,
+   "versao": "815a9a7969"
   }
  ]
 }

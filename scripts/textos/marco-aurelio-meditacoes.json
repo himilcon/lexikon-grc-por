@@ -1,0 +1,51 @@
+{
+  "id": "marco-aurelio-meditacoes",
+  "autor": "Marco Aurélio",
+  "autorGr": "Μᾶρκος Αὐρήλιος",
+  "titulo": "Meditações",
+  "tituloGr": "Τὰ εἰς ἑαυτόν",
+  "cts": "urn:cts:greekLit:tlg0562.tlg001",
+  "edicao": "M. Antoninus Imperator, Ad se ipsum, ed. J. H. Leopold. Leipzig: Teubner, 1908.",
+  "edicaoCurta": "Leopold, 1908",
+  "referencia": "Ref.",
+  "exemploRef": "4.3",
+  "niveis": [
+    {
+      "nome": "Livro",
+      "rotulos": {
+        "1": "I",
+        "2": "II",
+        "3": "III",
+        "4": "IV",
+        "5": "V",
+        "6": "VI",
+        "7": "VII",
+        "8": "VIII",
+        "9": "IX",
+        "10": "X",
+        "11": "XI",
+        "12": "XII"
+      }
+    }
+  ],
+  "divisoesComoMarco": {
+    "chapter": "cap",
+    "section": "sec"
+  },
+  "juntarParagrafos": true,
+  "fonteTexto": {
+    "nome": "Perseus Digital Library (canonical-greekLit)",
+    "url": "https://github.com/PerseusDL/canonical-greekLit/blob/master/data/tlg0562/tlg001/tlg0562.tlg001.perseus-grc2.xml",
+    "arquivo": "data/tlg0562/tlg001/tlg0562.tlg001.perseus-grc2.xml",
+    "licenca": "CC BY-SA 4.0"
+  },
+  "fonteAnotacao": {
+    "nome": "GLAUx — The Greek Language Automated (A. Keersmaekers, KU Leuven)",
+    "url": "https://github.com/alekkeersmaekers/glaux",
+    "arquivo": "xml/0562-001.xml",
+    "licenca": "CC BY-SA 4.0",
+    "nota": "Lemas, morfologia e sintaxe anotados automaticamente (precisão informada pelo projeto: lemas 98,8%, morfologia 97,2%, sintaxe ~80%)."
+  },
+  "notaEdicao": "Os números em destaque à margem são os capítulos (aforismos) de cada livro; os menores, as seções. A referência é livro.capítulo (ex.: 4.3). Entre [ ] estão as palavras que Leopold considera interpoladas; entre ⟨ ⟩, as que ele acrescenta.",
+  "descricao": "Os doze livros de notas “para si mesmo” do imperador estoico: o livro I, das dívidas para com mestres e familiares, e reflexões sobre a natureza, a razão (λόγος), a morte, a impermanência e o dever."
+}

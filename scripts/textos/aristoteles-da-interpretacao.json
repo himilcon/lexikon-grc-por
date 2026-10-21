@@ -1,0 +1,28 @@
+{
+  "id": "aristoteles-da-interpretacao",
+  "autor": "Aristóteles",
+  "autorGr": "Ἀριστοτέλης",
+  "titulo": "Da interpretação",
+  "tituloGr": "Περὶ ἑρμηνείας",
+  "colecao": "Órganon",
+  "cts": "urn:cts:greekLit:tlg0086.tlg017",
+  "edicao": "Aristotelis Opera, vol. 1, ed. Immanuel Bekker. Oxford: Oxford University Press, 1837.",
+  "edicaoCurta": "Bekker, 1837",
+  "referencia": "Ref.",
+  "exemploRef": "9.1",
+  "fonteTexto": {
+    "nome": "First1KGreek (Open Greek and Latin / Univ. Leipzig)",
+    "url": "https://github.com/OpenGreekAndLatin/First1KGreek/blob/master/data/tlg0086/tlg017/tlg0086.tlg017.1st1K-grc1.xml",
+    "arquivo": "data/tlg0086/tlg017/tlg0086.tlg017.1st1K-grc1.xml",
+    "licenca": "CC BY-SA 4.0"
+  },
+  "fonteAnotacao": {
+    "nome": "GLAUx — The Greek Language Automated (A. Keersmaekers, KU Leuven)",
+    "url": "https://github.com/alekkeersmaekers/glaux",
+    "arquivo": "xml/0086-017.xml",
+    "licenca": "CC BY-SA 4.0",
+    "nota": "Lemas, morfologia e sintaxe anotados automaticamente (precisão informada pelo projeto: lemas 98,8%, morfologia 97,2%, sintaxe ~80%)."
+  },
+  "notaEdicao": "Os números à margem são as seções da edição digital (capítulo.seção).",
+  "descricao": "Nome, verbo, afirmação e negação; a proposição como portadora de verdade e falsidade; os opostos (o quadrado das oposições), a modalidade e, no cap. 9, o problema dos futuros contingentes (a batalha naval de amanhã)."
+}

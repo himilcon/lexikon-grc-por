@@ -102,6 +102,9 @@ LEMMA_FIX = {
     "ἐνεγκατόω": "φέρω", "διαγνοέω": "διαγιγνώσκω", "κηρα": "κήρ", "κήρα": "κήρ",
     "μυάω": "μυέω", "ἐγκαθανδάνω": "ἐγκαταδέω", "λύκων": "λύκος", "κέβητος": "Κέβης",
     "νεουογός": "νεουργός", "εἰσκοπόω": "σκοπέω", "Φαῖδρας": "Φαῖδρος", "ἀνειπεῖν": "ἀνεῖπον",
+    # Órganon e Marco Aurélio
+    "ὁποτέσρις": "ὁπότερος", "ὁπόσσις": "ὁπόσος", "παρῳχ́οηκε": "παροίχομαι", "παρῳχακίσκω": "παροίχομαι",
+    "ἐνεχθέω": "φέρω", "Σέκουνς": "Σέκουνδα", "Ού̓ηρος": "Οὐῆρος",
 }
 
 
@@ -186,6 +189,7 @@ def tei_blocks(path, meta):
     levels = meta.get("niveis") or [{"nome": "Capítulo"}]
     skip_divs = set(meta.get("ignorarDivisoes") or [])   # ex.: as páginas de Stephanus, que viram só marcos
     as_marks = meta.get("divisoesComoMarco") or {}       # ex.: {"chapter": "cap", "section": "sec"}
+    select = tuple(meta["selecionar"]) if meta.get("selecionar") else None   # ex.: ["book", "priora"]
     root = ET.parse(path).getroot()
     body = root.find(f".//{TEI}body")
     blocks = []
@@ -261,6 +265,11 @@ def tei_blocks(path, meta):
             tag = ch.tag.replace(TEI, "")
             if tag == "div":
                 kind = as_marks.get(ch.get("subtype")) if ch.get("type") == "textpart" else None
+                if select and depth == 0 and ch.get("type") == "textpart" and ch.get("subtype") == select[0]:
+                    # arquivo com várias obras (Primeiros e Segundos analíticos): só a escolhida, sem título
+                    if ch.get("n") == select[1]:
+                        visit(ch, 0)
+                    continue
                 if kind:
                     # divisão mostrada só como número à margem (capítulo e seção em Heródoto, seção na Anábase)
                     state["path"] = state["path"][:depth] + [ch.get("n")]
@@ -464,16 +473,26 @@ def build(meta_path, tei_path, glaux_path, ddgp_path, out_dir):
     lemmas, lemma_ix = [], {}
     stats = Counter()
 
+    lemma_found = {}
+
     def lem_index(lemma, form):
         key = nfc(lemma)
         key = LEMMA_FIX.get(key, key)
+        if key not in lemma_found:
+            lemma_found[key] = bool(ddgp_ids(key, None, by_acc, by_bare)[0])
+        lookup = key
+        if not lemma_found[key] and form:
+            # lema ausente do DDGP: cada forma tenta o seu próprio verbete (καθά → καθάπερ, καθὰ…)
+            key = f"{key}|{accented(form)}"
         if key not in lemma_ix:
-            ids, how = ddgp_ids(key, form, by_acc, by_bare)
+            ids, how = ddgp_ids(lookup, form, by_acc, by_bare)
             lemma_ix[key] = len(lemmas)
-            shown = key
+            shown = lookup
             if how == "forma" and ids:
                 # lema do GLAUx ausente do DDGP e verbete achado pela forma: mostra o lema do DDGP
                 shown = re.sub(r"[\d¹²³⁴]+$", "", hw_by_id[ids[0]].split(",")[0].strip().split()[0]).split("-")[0] or key
+            if not ids:
+                shown = lookup                       # sem verbete: mostra o lema, não a chave interna
             lemmas.append([shown, ids] + ([how] if how == "forma" else []))
         return lemma_ix[key]
 
@@ -509,7 +528,8 @@ def build(meta_path, tei_path, glaux_path, ddgp_path, out_dir):
         "lemas": lemmas,
         "blocos": out_blocks,
         "estat": {"palavras": len(words), **stats,
-                  "lemas": len(lemmas), "lemas_sem_verbete": sum(1 for l in lemmas if not l[1])},
+                  "lemas": len({l[0] for l in lemmas}),
+                  "lemas_sem_verbete": len({l[0] for l in lemmas if not l[1]} - {l[0] for l in lemmas if l[1]})},
     }
     os.makedirs(out_dir, exist_ok=True)
     out = os.path.join(out_dir, meta["id"] + ".json")
@@ -521,6 +541,8 @@ def build(meta_path, tei_path, glaux_path, ddgp_path, out_dir):
     index = json.load(open(idx_path, encoding="utf-8")) if os.path.exists(idx_path) else {"textos": []}
     entry = {k: meta[k] for k in ("id", "autor", "autorGr", "titulo", "tituloGr", "descricao")}
     entry["edicaoCurta"] = meta.get("edicaoCurta", "")
+    if meta.get("colecao"):
+        entry["colecao"] = meta["colecao"]
     entry["palavras"] = len(words)
     entry["versao"] = hashlib.sha1(json.dumps(doc, ensure_ascii=False, sort_keys=True).encode()).hexdigest()[:10]
     ids = [t["id"] for t in index["textos"]]

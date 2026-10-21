@@ -1,0 +1,56 @@
+{
+  "id": "aristoteles-topicos",
+  "autor": "Aristóteles",
+  "autorGr": "Ἀριστοτέλης",
+  "titulo": "Tópicos",
+  "tituloGr": "Τοπικά",
+  "colecao": "Órganon",
+  "cts": "urn:cts:greekLit:tlg0086.tlg044",
+  "edicao": "Aristotelis Opera, vol. 1, ed. Immanuel Bekker. Oxford: Oxford University Press, 1837.",
+  "edicaoCurta": "Bekker, 1837",
+  "referencia": "Ref.",
+  "exemploRef": "1.5",
+  "niveis": [
+    {
+      "nome": "Livro",
+      "rotulos": {
+        "1": "Α",
+        "2": "Β",
+        "3": "Γ",
+        "4": "Δ",
+        "5": "Ε",
+        "6": "Ζ",
+        "7": "Η",
+        "8": "Θ"
+      },
+      "extra": {
+        "1": "I",
+        "2": "II",
+        "3": "III",
+        "4": "IV",
+        "5": "V",
+        "6": "VI",
+        "7": "VII",
+        "8": "VIII"
+      }
+    },
+    {
+      "nome": "Capítulo"
+    }
+  ],
+  "fonteTexto": {
+    "nome": "First1KGreek (Open Greek and Latin / Univ. Leipzig)",
+    "url": "https://github.com/OpenGreekAndLatin/First1KGreek/blob/master/data/tlg0086/tlg044/tlg0086.tlg044.1st1K-grc1.xml",
+    "arquivo": "data/tlg0086/tlg044/tlg0086.tlg044.1st1K-grc1.xml",
+    "licenca": "CC BY-SA 4.0"
+  },
+  "fonteAnotacao": {
+    "nome": "GLAUx — The Greek Language Automated (A. Keersmaekers, KU Leuven)",
+    "url": "https://github.com/alekkeersmaekers/glaux",
+    "arquivo": "xml/0086-044.xml",
+    "licenca": "CC BY-SA 4.0",
+    "nota": "Lemas, morfologia e sintaxe anotados automaticamente (precisão informada pelo projeto: lemas 98,8%, morfologia 97,2%, sintaxe ~80%)."
+  },
+  "notaEdicao": "A referência é livro.capítulo (ex.: 1.5). A edição digital de Bekker não traz a numeração de página e linha (24a10…).",
+  "descricao": "O método dialético para argumentar a partir de opiniões aceitas (ἔνδοξα): os predicáveis (definição, próprio, gênero, acidente), os lugares-comuns (τόποι) para estabelecer e refutar cada um, e a prática do debate (livro Θ)."
+}

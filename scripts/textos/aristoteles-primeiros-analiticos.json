@@ -1,0 +1,44 @@
+{
+  "id": "aristoteles-primeiros-analiticos",
+  "autor": "Aristóteles",
+  "autorGr": "Ἀριστοτέλης",
+  "titulo": "Primeiros analíticos",
+  "tituloGr": "Ἀναλυτικὰ πρότερα",
+  "colecao": "Órganon",
+  "cts": "urn:cts:greekLit:tlg0086.tlg001",
+  "edicao": "Aristotelis Opera, vol. 1, ed. Immanuel Bekker. Oxford: Oxford University Press, 1837.",
+  "edicaoCurta": "Bekker, 1837",
+  "referencia": "Ref.",
+  "exemploRef": "1.4",
+  "niveis": [
+    {
+      "nome": "Livro",
+      "rotulos": {
+        "1": "Α",
+        "2": "Β"
+      }
+    },
+    {
+      "nome": "Capítulo"
+    }
+  ],
+  "selecionar": [
+    "book",
+    "priora"
+  ],
+  "fonteTexto": {
+    "nome": "First1KGreek (Open Greek and Latin / Univ. Leipzig)",
+    "url": "https://github.com/OpenGreekAndLatin/First1KGreek/blob/master/data/tlg0086/tlg001/tlg0086.tlg001.1st1K-grc1.xml",
+    "arquivo": "data/tlg0086/tlg001/tlg0086.tlg001.1st1K-grc1.xml",
+    "licenca": "CC BY-SA 4.0"
+  },
+  "fonteAnotacao": {
+    "nome": "GLAUx — The Greek Language Automated (A. Keersmaekers, KU Leuven)",
+    "url": "https://github.com/alekkeersmaekers/glaux",
+    "arquivo": "xml/0086-001.xml",
+    "licenca": "CC BY-SA 4.0",
+    "nota": "Lemas, morfologia e sintaxe anotados automaticamente (precisão informada pelo projeto: lemas 98,8%, morfologia 97,2%, sintaxe ~80%)."
+  },
+  "notaEdicao": "A referência é livro.capítulo (ex.: 1.4). A edição digital de Bekker não traz a numeração de página e linha (24a10…).",
+  "descricao": "A teoria do silogismo: as três figuras e seus modos válidos, a conversão das proposições, os silogismos modais, a descoberta de premissas e a redução às figuras; no livro Β, propriedades e defeitos dos silogismos, a indução e o entimema."
+}

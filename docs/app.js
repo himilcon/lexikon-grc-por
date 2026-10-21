@@ -284,9 +284,9 @@ function viewHome() {
     ${hist.length ? `<h3 class="count">Consultados recentemente</h3><div class="chips">${hist.slice(0, 15).map(chip).join("")}</div>` : ""}
     <h3 class="count">Experimente</h3><div class="chips">${examples}<a href="#/acaso">ao acaso ↻</a></div>
     <h3 class="count">Ler textos</h3>
-    <a class="home-texts" href="#/textos"><span lang="grc">Ἡρόδοτος · Πλάτων · Ξενοφῶν · Ἀριστοτέλης</span>
+    <a class="home-texts" href="#/textos"><span lang="grc">Ἡρόδοτος · Πλάτων · Ξενοφῶν · Ἀριστοτέλης · Μᾶρκος Αὐρήλιος</span>
       <span>Heródoto (<i>Histórias</i>), Platão (<i>Apologia</i>, <i>Mênon</i>, <i>Banquete</i>, <i>Fédon</i>, <i>República</i>),
-        Xenofonte (<i>Anábase</i>) e Aristóteles (<i>Categorias</i>, <i>Metafísica</i>):
+        Xenofonte (<i>Anábase</i>), Aristóteles (o <i>Órganon</i> e a <i>Metafísica</i>) e Marco Aurélio (<i>Meditações</i>):
         toque em cada palavra para ver lema, análise e verbete →</span></a>`;
 }
 

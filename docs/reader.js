@@ -72,13 +72,17 @@ async function loadText(id) {
   // índice plano das palavras: [forma, análises]
   doc.words = [];
   for (const b of doc.blocos) for (const it of b.x || []) if (Array.isArray(it)) doc.words.push(it);
+  // ocorrências agrupadas pelo nome do lema (um lema ausente do DDGP pode ter uma entrada por forma)
   doc.byLemma = new Map();
+  const byName = new Map();
   doc.words.forEach((w, i) => {
     for (const a of w[1]) {
       if (!a[1]) continue;  // análise de palavra inteira (crase, οὐδέ…) não conta como ocorrência
-      if (!doc.byLemma.has(a[0])) doc.byLemma.set(a[0], []);
-      const l = doc.byLemma.get(a[0]);
+      const name = doc.lemas[a[0]][0];
+      if (!byName.has(name)) byName.set(name, []);
+      const l = byName.get(name);
       if (l[l.length - 1] !== i) l.push(i);
+      doc.byLemma.set(a[0], l);
     }
   });
   indexText(doc);
@@ -139,7 +143,7 @@ async function viewTexts() {
     return head + `<li class="tcard">
       <a href="#/t/${t.id}">
         <span class="tcard-gr" lang="grc">${esc(t.tituloGr)}</span>
-        <span class="tcard-pt">${esc(t.autor)}, <i>${esc(t.titulo)}</i></span>
+        <span class="tcard-pt">${esc(t.autor)}, <i>${esc(t.titulo)}</i>${t.colecao ? ` <span class="tcard-col">${esc(t.colecao)}</span>` : ""}</span>
         <span class="tcard-desc">${esc(t.descricao)}</span>
         <span class="tcard-meta">${t.edicaoCurta ? esc(t.edicaoCurta) + " · " : ""}${t.palavras.toLocaleString("pt-BR")} palavras${pos ? ` · parou em ${esc(/^\d+[ab]/.test(pos) ? pos : "§" + pos)}` : ""}</span>
       </a></li>`;

@@ -81,7 +81,12 @@ Textos disponíveis:
 
 | Texto | Edição | Palavras |
 |---|---|---|
-| Aristóteles, *Categorias* (Κατηγορίαι) | Bekker, Oxford 1837 (First1KGreek) | 10 316 |
+| Aristóteles, *Categorias* (Κατηγορίαι) — *Órganon* | Bekker, Oxford 1837 (First1KGreek) | 10 316 |
+| Aristóteles, *Da interpretação* (Περὶ ἑρμηνείας) — *Órganon* | Bekker 1837 (First1KGreek) | 6 245 |
+| Aristóteles, *Primeiros analíticos* (Ἀναλυτικὰ πρότερα) — *Órganon* | Bekker 1837 (First1KGreek) | 37 579 |
+| Aristóteles, *Segundos analíticos* (Ἀναλυτικὰ ὕστερα) — *Órganon* | Bekker 1837 (First1KGreek) | 22 673 |
+| Aristóteles, *Tópicos* (Τοπικά) — *Órganon* | Bekker 1837 (First1KGreek) | 44 125 |
+| Aristóteles, *Refutações sofísticas* (Περὶ σοφιστικῶν ἐλέγχων) — *Órganon* | Bekker 1837 (First1KGreek) | 14 115 |
 | Aristóteles, *Metafísica* (Τὰ μετὰ τὰ φυσικά) | Ross, Oxford 1924 (Perseus) | 78 946 |
 | Platão, *Apologia de Sócrates* (Ἀπολογία Σωκράτους) | Burnet (Perseus) — anotação **manual** | 8 752 |
 | Platão, *Mênon* (Μένων) | Burnet (Perseus) | 9 703 |
@@ -90,6 +95,11 @@ Textos disponíveis:
 | Platão, *República* (Πολιτεία) | Burnet (Perseus) | 88 265 |
 | Xenofonte, *Anábase* (Κύρου ἀνάβασις) | Marchant, Oxford 1904 (Perseus) | 57 195 |
 | Heródoto, *Histórias* (Ἱστορίαι) | Godley, Loeb 1920 (Perseus) — anotação manual (PROIEL) em ~46% das frases | 184 943 |
+| Marco Aurélio, *Meditações* (Τὰ εἰς ἑαυτόν) | Leopold, Teubner 1908 (Perseus) | 29 267 |
+
+As edições digitais de Bekker do *Órganon* (exceto as *Categorias*) não trazem a numeração de página e
+linha; a referência é livro.capítulo ou capítulo.seção. No First1KGreek, *Primeiros* e *Segundos
+analíticos* estão num só arquivo (e num só arquivo do GLAUx); `selecionar` no metadado escolhe a obra.
 
 Em Xenofonte e Heródoto a referência é livro.capítulo.seção (`4.7.24`, `7.226`): na *Anábase* os
 capítulos são títulos e as seções vão à margem; em Heródoto, capítulos (em destaque) e seções vão à
@@ -130,14 +140,21 @@ pelas letras sem diacríticos; a ortografia exibida é sempre a do TEI. Resultad
 | *Fédon* | 22 274 de 22 356 | 27 de 1 899 | 43 (0,2%) |
 | *República* | 88 204 de 88 265 | 286 de 4 629 | 378 (0,4%) |
 | *Anábase* | 56 595 de 57 195 (faltam os sumários no início dos livros, tidos por espúrios) | 244 de 3 614 | 734 (1,3%) |
-| *Histórias* | 184 843 de 184 943 | 1 493 de 8 988 | 4 275 (2,3%), dos quais ~3 950 nomes próprios |
+| *Histórias* | 184 843 de 184 943 | 1 504 de 9 006 | 4 258 (2,3%), dos quais ~3 950 nomes próprios |
+| *Da interpretação* | 6 243 de 6 245 | 12 de 395 | 108 (1,7%: ἀντίφασις, κατάφασις, ἀπόφανσις) |
+| *Primeiros analíticos* | 37 572 de 37 579 | 63 de 790 | 211 (0,6%) |
+| *Segundos analíticos* | 22 670 de 22 673 | 64 de 942 | 166 (0,7%) |
+| *Tópicos* | 44 116 de 44 125 | 129 de 1 506 | 316 (0,7%) |
+| *Refutações sofísticas* | 14 112 de 14 115 | 69 de 1 056 | 176 (1,2%) |
+| *Meditações* | 29 227 de 29 267 | 426 de 3 589 | 587 (2,0%: vocabulário da koiné e nomes romanos) |
 
 As palavras sem análise são, em geral, as que o editor exclui ([ ]) ou variantes ausentes da versão do
 texto usada pelo GLAUx; o painel as procura diretamente no dicionário.
 
 Os lemas sem verbete são sobretudo termos técnicos (ἐντελέχεια, ἀντίφασις, ἀδιαίρετος, κατάφασις) e
 nomes próprios (Ἐμπεδοκλῆς, Δημόκριτος); para esses o painel oferece um link ao Logeion.
-Quando o lema do GLAUx não está no DDGP, o conversor tenta também a forma do texto, a grafia sem ν
+Quando o lema do GLAUx não está no DDGP, o conversor tenta também a forma de cada ocorrência
+(por exemplo, o lema καθά não está no DDGP, mas a forma καθάπερ está), a grafia sem ν
 eufônico (ἔμπροσθεν → ἔμπροσθε), a forma ática com ττ, a outra voz do verbo (μαντεύομαι → μαντεύω,
 χαρίζω → χαρίζομαι), μίγνυμι por μείγνυμι e, para substantivos neutros e femininos registrados no verbete
 do adjetivo, a forma em ‑ος (χρηστήριον → χρηστήριος, Ἀττική → Ἀττικός); verbetes como `παντάπασι(ν)`
