@@ -203,9 +203,35 @@ body.reading main { max-width: 1240px; }
 .rback { font-size: 15px; }
 .rmeta { font-size: 15px; color: var(--ink-soft); margin: 6px 0 8px; }
 .rcaps { display: flex; flex-wrap: wrap; gap: 4px; align-items: center; font-size: 15px; }
-.rcaps::before { content: "Capítulos"; color: var(--ink-soft); margin-right: 6px; font-size: 13px; letter-spacing: .1em; text-transform: uppercase; }
+.rcaps::before { content: attr(data-label); color: var(--ink-soft); margin-right: 6px; font-size: 13px; letter-spacing: .1em; text-transform: uppercase; }
 .rcaps a { min-width: 30px; text-align: center; padding: 1px 6px; border-radius: 6px; border: 1px solid var(--rule); color: var(--ink); background: var(--card); }
 .rcaps a:hover { border-color: var(--accent-soft); text-decoration: none; }
+.rcaps a.on { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.rsub { margin-top: 6px; }
+.rsub:empty { display: none; }
+.rmeta-ed { font-size: 13px; }
+.rtools { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px; margin-top: 10px; }
+.rtools:empty { display: none; }
+.rtools .rcont { margin-top: 0; }
+.rgo { display: flex; gap: 4px; }
+.rgo input {
+  font: inherit; font-size: 15px; width: 9.5em; padding: 4px 10px; color: var(--ink);
+  background: var(--card); border: 1px solid var(--rule); border-radius: 8px; outline: none;
+}
+.rgo input:focus { border-color: var(--accent-soft); }
+.rgo button { font: inherit; font-size: 15px; padding: 4px 10px; border-radius: 8px; border: 1px solid var(--rule); background: none; color: var(--accent); cursor: pointer; }
+.rtext .book {
+  font-size: 24px; font-weight: 400; text-align: center; letter-spacing: .06em; margin: 30px 0 4px; scroll-margin-top: 90px;
+}
+.rtext h3.cap { margin-top: 26px; }
+.rtext .sec.bk { color: var(--ink-soft); font-size: 11px; }
+.rtext .sec.bkp { color: var(--accent-soft); font-size: 12px; }
+.rpager { display: flex; justify-content: space-between; gap: 12px; margin: 26px 0 0; padding-top: 12px; border-top: 1px solid var(--rule); font-size: 16px; }
+.rpager:empty { display: none; }
+.toast {
+  position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%); z-index: 30; max-width: 90vw;
+  padding: 8px 16px; border-radius: 10px; background: var(--ink); color: var(--paper); font-size: 15px;
+}
 .rcont { display: inline-block; margin-top: 10px; font-size: 15px; }
 
 .rtext { font-size: 21px; line-height: 1.85; hyphens: none; }
@@ -215,7 +241,6 @@ body.reading main { max-width: 1240px; }
   font-size: 15px; font-weight: 400; letter-spacing: .2em; text-transform: uppercase; color: var(--ink-soft);
   text-align: center; margin: 34px 0 12px; scroll-margin-top: 90px;
 }
-.rtext .cap::before { content: "Capítulo "; }
 .rtext .cap::after { content: ""; display: block; width: 40px; margin: 8px auto 0; border-top: 1px solid var(--rule); }
 .rtext .sec {
   font-size: 12px; vertical-align: super; line-height: 0; color: var(--accent-soft); padding: 0 2px 0 3px;

@@ -7,8 +7,20 @@
    "titulo": "Categorias",
    "tituloGr": "Κατηγορίαι",
    "descricao": "O primeiro tratado do Órganon: homônimos, sinônimos e parônimos; as dez categorias (substância, quantidade, relação, qualidade, ação, paixão, lugar, tempo, posição, posse); os opostos e os chamados Postpraedicamenta.",
+   "edicaoCurta": "Bekker, 1837",
    "palavras": 10316,
-   "versao": "b71254193b"
+   "versao": "3ae9f17022"
+  },
+  {
+   "id": "aristoteles-metafisica",
+   "autor": "Aristóteles",
+   "autorGr": "Ἀριστοτέλης",
+   "titulo": "Metafísica",
+   "tituloGr": "Τὰ μετὰ τὰ φυσικά",
+   "descricao": "Os catorze livros sobre a “filosofia primeira”: as causas e os princípios (Α), as aporias (Β), o ser enquanto ser e o princípio de não contradição (Γ), o léxico filosófico (Δ), a substância (Ζ, Η), ato e potência (Θ) e o primeiro motor imóvel (Λ).",
+   "edicaoCurta": "Ross, 1924",
+   "palavras": 78946,
+   "versao": "8fcce043d0"
   }
  ]
 }

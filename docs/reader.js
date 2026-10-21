@@ -81,8 +81,41 @@ async function loadText(id) {
       if (l[l.length - 1] !== i) l.push(i);
     }
   });
+  indexText(doc);
   textCache.set(id, doc);
   return doc;
+}
+
+/* Divide o texto em partes (livros) e indexa referências → parte.
+   Texto com um só nível de divisão (as Categorias) é uma parte só. */
+function indexText(doc) {
+  doc.paged = doc.blocos.some(b => b.t === "c" && b.lv > 0);
+  doc.parts = []; doc.chapters = [];
+  doc.refPart = new Map(); doc.refs = [];
+  let wi = 0, cur = null;
+  const addRef = r => { if (r && !doc.refPart.has(r.toLowerCase())) { doc.refPart.set(r.toLowerCase(), doc.parts.length - 1); doc.refs.push(r); } };
+  doc.blocos.forEach((b, bi) => {
+    if (b.t === "c" && (b.lv === 0 || b.lv === undefined) && (doc.paged || !cur)) {
+      if (cur) cur.b1 = bi;
+      cur = { b0: bi, b1: doc.blocos.length, wStart: wi, c: b.c, rot: b.rot || b.c, chip: b.chip || b.c, chapters: [] };
+      if (!doc.paged) { cur.c = ""; cur.rot = ""; }
+      doc.parts.push(cur);
+    } else if (!cur) {
+      cur = { b0: 0, b1: doc.blocos.length, wStart: 0, c: "", rot: "", chip: "", chapters: [] };
+      doc.parts.push(cur);
+    }
+    if (b.t === "c") {
+      const ch = { c: b.c, chip: b.chip || b.c };
+      if (doc.paged ? b.lv > 0 : true) (doc.paged ? cur.chapters : doc.chapters).push(ch);
+      addRef(b.c);
+      return;
+    }
+    b.w0 = wi;
+    for (const it of b.x) {
+      if (Array.isArray(it)) wi++;
+      else if (it && it.s) addRef(it.s);
+    }
+  });
 }
 
 /* ---------- biblioteca ---------- */
@@ -103,7 +136,7 @@ async function viewTexts() {
         <span class="tcard-gr" lang="grc">${esc(t.autorGr)} · ${esc(t.tituloGr)}</span>
         <span class="tcard-pt">${esc(t.autor)}, <i>${esc(t.titulo)}</i></span>
         <span class="tcard-desc">${esc(t.descricao)}</span>
-        <span class="tcard-meta">${t.palavras.toLocaleString("pt-BR")} palavras${pos ? ` · parou em §${esc(pos)}` : ""}</span>
+        <span class="tcard-meta">${t.edicaoCurta ? esc(t.edicaoCurta) + " · " : ""}${t.palavras.toLocaleString("pt-BR")} palavras${pos ? ` · parou em ${esc(/^\d+[ab]/.test(pos) ? pos : "§" + pos)}` : ""}</span>
       </a></li>`;
   }).join("");
   main.innerHTML = `<div class="page">
@@ -128,17 +161,43 @@ async function viewReader(id, target) {
       return;
     }
     if (location.hash.split("/")[2] !== id) return;   // o usuário já mudou de página
-    R = { id, doc, sel: -1, entry: null };
+    R = { id, doc, sel: -1, entry: null, part: -1 };
     renderReader();
   }
-  const sec = target || null;
-  if (sec) {
-    const el = main.querySelector(`[data-s="${CSS.escape(sec)}"]`);
+  const ref = target ? resolveRef(target) : null;
+  if (target && !ref) {
+    showPart(R.part >= 0 ? R.part : 0);
+    toast(`Referência “${target}” não encontrada neste texto.`);
+    return;
+  }
+  if (ref) {
+    showPart(R.doc.refPart.get(ref.toLowerCase()));
+    const el = main.querySelector(`#rtext [data-s="${CSS.escape(ref)}"]`);
     if (el) { el.scrollIntoView({ block: "start" }); scrollBy(0, -scrollOffset()); flash(el); }
-  } else if (!R.scrolled) {
+  } else if (R.part < 0) {
+    showPart(0);
     scrollTo(0, 0);
   }
-  R.scrolled = true;
+}
+
+/* Aceita a referência exata (5.3, 7, 7.3, 1028a10) ou uma de Bekker incompleta ou entre marcos
+   (1028, 1028a, 1072b14 → último marco de linha da página até a linha 14) */
+function resolveRef(t) {
+  t = t.trim().toLowerCase().replace(/\s+/g, "");
+  const { refPart, refs } = R.doc;
+  if (refPart.has(t)) return t;
+  const m = /^(\d+)([ab])?(\d+)?$/.exec(t);
+  if (m && refs.some(isBekker)) {
+    const [, pg, col, line] = m;
+    const onPage = refs.filter(r => { const x = /^(\d+)([ab])(\d+)$/.exec(r); return x && x[1] === pg && (!col || x[2] === col); });
+    if (onPage.length) {
+      if (!line) return onPage[0];
+      const n = +line;
+      const before = onPage.filter(r => +/\d+$/.exec(r)[0] <= n);
+      return before.length ? before[before.length - 1] : onPage[0];
+    }
+  }
+  return refs.find(r => r.toLowerCase().startsWith(t)) || null;
 }
 
 function scrollOffset() {
@@ -150,50 +209,103 @@ function flash(el) {
   el.classList.remove("flash"); void el.offsetWidth; el.classList.add("flash");
 }
 
+function toast(msg) {
+  const t = document.createElement("div");
+  t.className = "toast"; t.textContent = msg;
+  document.body.appendChild(t);
+  setTimeout(() => t.remove(), 3200);
+}
+
+const isBekker = s => /^\d+[ab]/.test(s);
+const refLabel = s => (isBekker(s) ? s : "§" + s);
+
 function renderReader() {
   const { doc } = R;
   const m = doc.meta;
-  let wi = 0, html = "";
-  const chapters = [];
-  for (const b of doc.blocos) {
-    if (b.t === "c") {
-      chapters.push(b.c);
-      html += `<h2 class="cap" id="cap-${esc(b.c)}" data-s="${esc(b.c)}">${esc(b.c)}</h2>`;
-      continue;
-    }
-    let inner = "";
-    for (const it of b.x) {
-      if (typeof it === "string") inner += esc(it);
-      else if (Array.isArray(it)) {
-        inner += `<span class="w${it[1].length ? "" : " nx"}" data-i="${wi}">${esc(it[0])}</span>`;
-        wi++;
-      } else if (it.s) inner += `<a class="sec" href="#/t/${R.id}/${esc(it.s)}" data-s="${esc(it.s)}" title="§${esc(it.s)}">${esc(it.s.split(".").pop())}</a>`;
-      else if (it.pb) inner += `<span class="pb" title="página ${esc(it.pb)} da ed. de Bekker (Oxford, 1837)">${esc(it.pb)}</span>`;
-    }
-    html += b.t === "h" ? `<h1 class="rtitle" lang="grc">${inner}</h1>` : `<p lang="grc">${inner}</p>`;
-  }
   const last = store.get("lx.read." + R.id, null);
+  const bekker = m.referencia === "Bekker";
   main.innerHTML = `
     <div class="reader">
       <div class="rcol">
         <header class="rhead">
           <a class="rback" href="#/textos">← Textos</a>
-          <div class="rmeta"><span lang="grc">${esc(m.autorGr)}</span> · ${esc(m.autor)}, <i>${esc(m.titulo)}</i></div>
-          <nav class="rcaps" aria-label="Capítulos">${chapters.map(c => `<a href="#/t/${R.id}/${esc(c)}">${esc(c)}</a>`).join("")}</nav>
-          ${last && last !== chapters[0] + ".1" ? `<a class="rcont" href="#/t/${R.id}/${esc(last)}">continuar em §${esc(last)} →</a>` : ""}
+          <div class="rmeta"><span lang="grc">${esc(m.autorGr)}</span> · ${esc(m.autor)}, <i>${esc(m.titulo)}</i>${m.edicaoCurta ? ` <span class="rmeta-ed">(${esc(m.edicaoCurta)})</span>` : ""}</div>
+          <nav class="rcaps" id="rparts" data-label="${doc.paged ? "Livros" : "Capítulos"}" aria-label="${doc.paged ? "Livros" : "Capítulos"}">${doc.parts.length > 1
+            ? doc.parts.map((p, i) => `<a href="#/t/${R.id}/${esc(p.c)}" data-p="${i}" title="${esc(p.rot)}" lang="grc">${esc(p.chip)}</a>`).join("")
+            : doc.chapters.map(c => `<a href="#/t/${R.id}/${esc(c.c)}">${esc(c.chip)}</a>`).join("")}</nav>
+          ${doc.paged ? `<nav class="rcaps rsub" id="rchaps" data-label="Capítulos" aria-label="Capítulos"></nav>` : ""}
+          <div class="rtools">
+            ${bekker ? `<form class="rgo" id="rgo"><input id="rgo-in" placeholder="Bekker: 1072b" aria-label="Ir para a referência de Bekker" autocomplete="off" spellcheck="false" inputmode="text"><button>ir</button></form>` : ""}
+            ${last ? `<a class="rcont" href="#/t/${R.id}/${esc(last)}">continuar em ${esc(refLabel(last))} →</a>` : ""}
+          </div>
         </header>
-        <article class="rtext" id="rtext">${html}</article>
+        <article class="rtext" id="rtext"></article>
+        <nav class="rpager" id="rpager"></nav>
         <footer class="rsrc">
           <p><b>Texto:</b> ${esc(m.edicao)} Transcrição digital: <a href="${esc(m.fonteTexto.url)}" target="_blank" rel="noopener">${esc(m.fonteTexto.nome)}</a>, ${esc(m.fonteTexto.licenca)}.</p>
           <p><b>Lemas, morfologia e sintaxe:</b> <a href="${esc(m.fonteAnotacao.url)}" target="_blank" rel="noopener">${esc(m.fonteAnotacao.nome)}</a>, ${esc(m.fonteAnotacao.licenca)}. ${esc(m.fonteAnotacao.nota)}</p>
-          <p>Os números à margem do texto são as seções (capítulo.seção) da edição digital; os números pequenos e apagados, as páginas da edição de Bekker de 1837.
-            ${doc.estat.lemas_sem_verbete} dos ${doc.estat.lemas} lemas do texto não constam do DDGP; nesses casos o painel mostra só a análise.</p>
+          <p>${m.notaEdicao ? esc(m.notaEdicao) : "Os números à margem do texto são as seções (capítulo.seção) da edição digital; os números pequenos e apagados, as páginas da edição de Bekker de 1837."}
+            ${doc.estat.lemas_sem_verbete} dos ${doc.estat.lemas} lemas do texto não constam do DDGP; nesses casos o painel mostra só a análise e um link ao Logeion.</p>
         </footer>
       </div>
       <aside class="rpanel" id="rpanel" aria-live="polite" hidden></aside>
     </div>`;
   $("#rtext").addEventListener("click", onWordClick);
   $("#rpanel").addEventListener("click", onPanelClick);
+  const go = $("#rgo");
+  if (go) go.addEventListener("submit", ev => {
+    ev.preventDefault();
+    const v = $("#rgo-in").value.trim();
+    if (v) location.hash = `#/t/${R.id}/${encodeURIComponent(v.replace(/\s+/g, ""))}`;
+  });
+}
+
+/* Desenha uma parte (um livro) do texto; textos sem livros têm uma parte só */
+function showPart(p) {
+  if (p === undefined || p === R.part) return;
+  const { doc } = R;
+  const part = doc.parts[p];
+  closePanel();
+  R.part = p;
+  let html = "";
+  for (let bi = part.b0; bi < part.b1; bi++) {
+    const b = doc.blocos[bi];
+    if (b.t === "c") {
+      const tag = doc.paged && b.lv === 0 ? "h2" : doc.paged ? "h3" : "h2";
+      const cls = doc.paged && b.lv === 0 ? "book" : "cap";
+      html += `<${tag} class="${cls}" data-s="${esc(b.c)}">${esc(b.rot || b.c)}</${tag}>`;
+      continue;
+    }
+    let wi = b.w0, inner = "";
+    for (const it of b.x) {
+      if (typeof it === "string") inner += esc(it);
+      else if (Array.isArray(it)) inner += `<span class="w${it[1].length ? "" : " nx"}" data-i="${wi++}">${esc(it[0])}</span>`;
+      else if (it.br) inner += "<br>";
+      else if (it.s) {
+        const bk = isBekker(it.s);
+        const lab = it.d || it.s.split(".").pop();
+        inner += `<a class="sec${bk ? " bk" : ""}${bk && it.d && it.d === it.s ? " bkp" : ""}" href="#/t/${R.id}/${esc(it.s)}" data-s="${esc(it.s)}" title="${esc(refLabel(it.s))}">${esc(lab)}</a>`;
+      }
+      else if (it.pb) inner += `<span class="pb" title="página ${esc(it.pb)} da edição impressa">${esc(it.pb)}</span>`;
+    }
+    html += b.t === "h" ? `<h1 class="rtitle" lang="grc">${inner}</h1>` : `<p lang="grc">${inner}</p>`;
+  }
+  $("#rtext").innerHTML = html;
+  // navegação: parte atual, capítulos dela, parte anterior/seguinte
+  main.querySelectorAll("#rparts a[data-p]").forEach(a => a.classList.toggle("on", +a.dataset.p === p));
+  const ch = $("#rchaps");
+  if (ch) ch.innerHTML = part.chapters.map(c => `<a href="#/t/${R.id}/${esc(c.c)}">${esc(c.chip)}</a>`).join("");
+  const prev = doc.parts[p - 1], next = doc.parts[p + 1];
+  $("#rpager").innerHTML = doc.parts.length > 1
+    ? `${prev ? `<a href="#/t/${R.id}/${esc(prev.c)}">← ${esc(prev.rot)}</a>` : "<span></span>"}
+       ${next ? `<a href="#/t/${R.id}/${esc(next.c)}">${esc(next.rot)} →</a>` : "<span></span>"}`
+    : "";
+}
+
+function partOfWord(i) {
+  const ps = R.doc.parts;
+  for (let p = ps.length - 1; p >= 0; p--) if (i >= ps[p].wStart) return p;
+  return 0;
 }
 
 function onWordClick(ev) {
@@ -202,7 +314,7 @@ function onWordClick(ev) {
   selectWord(+w.dataset.i);
 }
 
-function wordEl(i) { return main.querySelector(`.w[data-i="${i}"]`); }
+function wordEl(i) { return main.querySelector(`#rtext .w[data-i="${i}"]`); }
 
 function clearMarks() {
   main.querySelectorAll(".w.sel, .w.same, .w.head, .w.dep").forEach(el => el.classList.remove("sel", "same", "head", "dep"));
@@ -212,6 +324,8 @@ function selectWord(i) {
   if (!R) return;
   const w = R.doc.words[i];
   if (!w) return;
+  const p = partOfWord(i);
+  if (p !== R.part) showPart(p);
   clearMarks();
   R.sel = i;
   const el = wordEl(i);
@@ -245,13 +359,12 @@ function markSame(li) {
 
 function saveSection(el) {
   if (!el) return;
-  let s = null, n = el;
-  // procura o marcador de seção anterior à palavra
-  const marks = [...main.querySelectorAll("#rtext [data-s]")];
-  for (const m of marks) {
-    if (m.compareDocumentPosition(n) & Node.DOCUMENT_POSITION_FOLLOWING) s = m.dataset.s; else break;
+  let s = null;
+  // procura o último marcador (seção, linha de Bekker ou capítulo) antes da palavra
+  for (const m of main.querySelectorAll("#rtext [data-s]")) {
+    if (m.compareDocumentPosition(el) & Node.DOCUMENT_POSITION_FOLLOWING) s = m.dataset.s; else break;
   }
-  if (s) store.set("lx.read." + R.id, s.includes(".") ? s : s + ".1");
+  if (s) store.set("lx.read." + R.id, s);
 }
 
 /* ---------- painel ---------- */

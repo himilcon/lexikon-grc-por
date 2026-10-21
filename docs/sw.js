@@ -1,6 +1,6 @@
 /* Service worker: guarda a aplicação, o dicionário e os textos para uso offline.
    Três caches separados, para que atualizar a aplicação não obrigue a baixar de novo o dicionário (8 MB). */
-const VERSION = "lx-v3";                    // aplicação: mude a cada alteração de HTML/CSS/JS
+const VERSION = "lx-v4";                    // aplicação: mude a cada alteração de HTML/CSS/JS
 const DATA_CACHE = "lx-data-2022-3x-1";     // dicionário: mude junto com DATA
 const TEXT_CACHE = "lx-textos";             // textos: cada arquivo vai com ?v=<versão> no endereço
 const SHELL = ["./", "index.html", "styles.css", "app.js", "keyboard.js", "reader.js", "manifest.webmanifest",
@@ -43,8 +43,20 @@ self.addEventListener("fetch", ev => {
       .catch(() => c.match(url.pathname))));
     return;
   }
-  // Textos: cache primeiro (versionados)
-  if (url.pathname.includes("/textos/")) { ev.respondWith(cacheFirst(ev.request, TEXT_CACHE)); return; }
+  // Textos: cache primeiro (versionados); ao guardar uma versão nova, descarta as anteriores do mesmo texto
+  if (url.pathname.includes("/textos/")) {
+    ev.respondWith(caches.open(TEXT_CACHE).then(async c => {
+      const hit = await c.match(ev.request);
+      if (hit) return hit;
+      const res = await fetch(ev.request);
+      if (res.ok) {
+        for (const k of await c.keys()) if (new URL(k.url).pathname === url.pathname) await c.delete(k);
+        await c.put(ev.request, res.clone());
+      }
+      return res;
+    }));
+    return;
+  }
   // Aplicação e fontes: usa o cache e atualiza em segundo plano
   if (url.origin === location.origin || url.hostname.endsWith("fonts.googleapis.com") || url.hostname.endsWith("fonts.gstatic.com")) {
     ev.respondWith(caches.open(VERSION).then(async c => {

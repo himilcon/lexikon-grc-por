@@ -82,6 +82,14 @@ Textos disponíveis:
 | Texto | Edição | Palavras |
 |---|---|---|
 | Aristóteles, *Categorias* (Κατηγορίαι) | Bekker, Oxford 1837 (First1KGreek) | 10 316 |
+| Aristóteles, *Metafísica* (Τὰ μετὰ τὰ φυσικά) | Ross, Oxford 1924 (Perseus) | 78 946 |
+
+Obras divididas em livros (a *Metafísica*) são mostradas **um livro por vez**, com navegação por livro
+(Α, α, Β… Ν) e por capítulo; a contagem e a navegação entre ocorrências de um lema valem para a obra
+inteira. Onde o TEI traz a numeração de **Bekker** (página, coluna e linha), ela aparece à margem e o
+campo *Bekker* leva direto a uma passagem: `1072b14`, `1028a` ou `1028` (link: `…/#/t/aristoteles-metafisica/1072b14`).
+Na edição de Ross, as palavras que ele considera interpoladas aparecem entre [ ] e não têm análise
+(o GLAUx não as anota); os acréscimos do editor aparecem entre ⟨ ⟩.
 
 ### De onde vêm os dados
 
@@ -94,9 +102,17 @@ Textos disponíveis:
 
 O GLAUx tokeniza o texto de outro modo (divide οὔτε em οὔ + -τε e as crases em duas partes, acrescenta
 termos elípticos e perde maiúsculas), por isso o conversor **alinha** as palavras do TEI às do GLAUx
-pelas letras sem diacríticos; a ortografia exibida é sempre a do TEI. Nas *Categorias*, 10 315 das
-10 316 palavras foram alinhadas (a exceção é o título), e 18 dos 622 lemas não constam do DDGP
-(termos técnicos como δεκτικός, κατάφασις, ἀποφατικός): para esses o painel oferece um link ao Logeion.
+pelas letras sem diacríticos; a ortografia exibida é sempre a do TEI. Resultado:
+
+| Texto | Palavras com análise | Lemas sem verbete no DDGP | Ocorrências sem verbete |
+|---|---|---|---|
+| *Categorias* | 10 315 de 10 316 (falta o título) | 18 de 622 | 66 (0,6%) |
+| *Metafísica* | 78 706 de 78 946 (as 238 excluídas por Ross + 2) | 220 de 2 159 | 670 (0,9%) |
+
+Os lemas sem verbete são sobretudo termos técnicos (ἐντελέχεια, ἀντίφασις, ἀδιαίρετος, κατάφασις) e
+nomes próprios (Ἐμπεδοκλῆς, Δημόκριτος); para esses o painel oferece um link ao Logeion.
+Quando o lema do GLAUx não está no DDGP, o conversor tenta também a forma do texto, a grafia sem ν
+eufônico (ἔμπροσθεν → ἔμπροσθε) e a forma ática com ττ.
 Alguns lemas do GLAUx são corrigidos em `LEMMA_FIX`, e homógrafos frequentes têm o verbete preferido
 fixado em `PREFERRED`, ambos em `scripts/build_text.py`.
 
@@ -105,8 +121,12 @@ fixado em `PREFERRED`, ambos em `scripts/build_text.py`.
 1. Ache o texto no GLAUx: em `metadata.txt` procure o autor/obra; o arquivo é `xml/<TLG>.xml`
    (ex.: `0086-006` = Aristóteles, *Categorias*). Confira a coluna `SOURCE_LICENSE`.
 2. Ache o TEI correspondente no First1KGreek ou no Perseus (`data/tlgXXXX/tlgYYY/…grc*.xml`).
-3. Crie `scripts/textos/<id>.json` com os metadados (copie o das *Categorias*).
-4. Gere o arquivo:
+3. Crie `scripts/textos/<id>.json` com os metadados (copie o das *Categorias* para obras de um só nível,
+   ou o da *Metafísica* para obras em livros e capítulos: `niveis` dá o nome de cada nível e os rótulos
+   dos livros; `referencia: "Bekker"` ativa o campo de busca por Bekker).
+4. Rode o conversor e confira, na lista que ele imprime, os lemas sem verbete: lemas malformados pelo
+   lematizador (ex.: `ἔρχοναι` para εἶναι) vão para `LEMMA_FIX`.
+5. Gere o arquivo:
 
 ```bash
 git clone --depth 1 --filter=blob:none --sparse https://github.com/alekkeersmaekers/glaux /tmp/glaux

@@ -6,6 +6,7 @@
   "tituloGr": "Κατηγορίαι",
   "cts": "urn:cts:greekLit:tlg0086.tlg006",
   "edicao": "Aristotelis Opera, vol. 1, ed. Immanuel Bekker. Oxford: Oxford University Press, 1837, pp. 1–38.",
+  "edicaoCurta": "Bekker, 1837",
   "fonteTexto": {
     "nome": "First1KGreek (Open Greek and Latin / Univ. Leipzig)",
     "url": "https://github.com/OpenGreekAndLatin/First1KGreek/blob/master/data/tlg0086/tlg006/tlg0086.tlg006.1st1K-grc1.xml",

@@ -73,6 +73,24 @@ LEMMA_FIX = {
     "ἔνιοι": "ἔνιος",
     "ἥδομαι": "ἥδω",
     "ἐφύω": "φύω",           # ἔφυσεν, aor. de φύω
+    # Metafísica: lemas malformados pelo lematizador automático (forma do texto → lema certo)
+    "ἔρχοναι": "εἰμί", "εἰνί": "εἰμί", "εἶνι": "εἰμί",            # εἶναι
+    "γίγνιμαι": "γίγνομαι", "γίγνετιομαι": "γίγνομαι", "γίγνει": "γίγνομαι",
+    "ἵσταμθι": "ἵστημι", "σττίνω": "ἵστημι",                      # ἵστασθαι, στήσεται
+    "μετρειθε͂ω": "μετρέω", "βαδιειθε͂ω": "βαδίζω", "διαιρειθε͂ω": "διαιρέω",
+    "διαλύθεεω": "διαλύω", "λεγετ́ρχομαι": "λέγω", "ἀνάγιμαι": "ἀνάγω",
+    "σκοπάω": "σκοπέω", "ἀξιάω": "ἀξιόω", "νοόω": "νοέω", "διείλω": "διαιρέω",
+    "ἑωράκεω": "ὁράω", "ἐξαιρόομαι": "ἐξαιρέω", "φύζω": "φύω", "ζάκλω": "ζάω",
+    "κράω": "κεράννυμι", "καχορίνω": "χωρίζω", "προσστάζω": "προστάσσω", "μεθιέω": "μέτειμι",
+    "τέχν": "τέχνη", "τεῥ͂ι": "ἕτερος", "μέλη": "μέλας", "κά̓κες": "κἀκεῖνος",
+    "λίθι": "λίθος", "πλίνθον": "πλίνθος", "αὗτι": "οὗτος", "ἡμίσεια": "ἥμισυς",
+    "ὀληθείς": "ἀληθής", "φυσικής": "φυσικός", "ἀνολογία": "ἀναλογία",
+    "συναμφότεροι": "συναμφότερος", "ἕσπερ": "ὥσπερ", "μεταφοράω": "μεταφορά",
+    "ὁμωνυμώσσω": "ὁμώνυμος", "μηθενός": "μηθείς", "μόνονέ": "μόνος",
+    "τοονδ́ς": "τοιοσδί", "τοιαδίͅς": "τοιοσδί", "εδί": "ὅδε", "ᾳδίς": "ὅδε", "τησδὶ": "ὅδε",
+    "τοσονδί": "τοσόσδε", "ὁπόσης": "ὁπόσος",
+    "ὁσποιᾳοῦν": "ὁποῖος", "ὁσποσιαιοῦν": "ὁποῖος", "ὁποιαιοῦν": "ὁποῖος", "ὁποιοσοῦν": "ὁποῖος",
+    "ἀδΐος": "ἀΐδιος", "ἐν-ὑπάρχω": "ἐνυπάρχω", "πηρψνις": "Φρῦνις",
 }
 
 
@@ -102,7 +120,12 @@ def ddgp_ids(lemma, form, by_acc, by_bare):
     for key, how in ((lemma, "lema"), (form, "forma")):
         if not key:
             continue
-        ids = by_acc.get(accented(key)) or by_bare.get(bare(key))
+        a, b = accented(key), bare(key)
+        ids = by_acc.get(a) or by_bare.get(b)
+        if not ids and b.endswith("ν"):              # ν eufônico: ἔμπροσθεν → ἔμπροσθε
+            ids = by_acc.get(a[:-1]) or by_bare.get(b[:-1])
+        if not ids and "σσ" in b:                    # jônico/koiné σσ → ático ττ
+            ids = by_acc.get(a.replace("σσ", "ττ")) or by_bare.get(b.replace("σσ", "ττ"))
         if ids:
             pref = PREFERRED.get(nfc(key))
             if pref in ids:
@@ -116,12 +139,33 @@ def ddgp_ids(lemma, form, by_acc, by_bare):
 WORD = re.compile(r"[Ͱ-ͳͶ-ͽΆΈ-Ͽἀ-῿̀-ͯ]+[’'ʼ]?")
 
 
-def tei_blocks(path):
-    """Lista de blocos {t: 'h'|'p', c: capítulo, x: [itens]}; item = str | {'s'} | {'pb'}."""
+def tei_blocks(path, meta):
+    """Lista de blocos do texto.
+
+    {t: 'c', c: '1.2', lv: nível, rot: 'Livro Α · …', chip: 'Α'}  divisão (livro, capítulo…)
+    {t: 'h'|'p', x: [itens]}                                     título ou parágrafo
+    item = str | {'s': ref, 'd': rótulo} (marco de seção ou linha de Bekker) | {'pb': n} | {'br': 1}
+
+    Os níveis de divisão e seus nomes vêm de meta["niveis"]; por omissão, um só nível, "Capítulo".
+    """
+    levels = meta.get("niveis") or [{"nome": "Capítulo"}]
     root = ET.parse(path).getroot()
     body = root.find(f".//{TEI}body")
     blocks = []
-    state = {"chapter": None, "section": None}
+    state = {"path": [], "page": None, "newpage": False}
+
+    def milestone(ch):
+        unit = (ch.get("unit") or "").lower()
+        n = ch.get("n")
+        if unit == "page":                          # página de Bekker (980a): rótulo vai na linha seguinte
+            state["page"], state["newpage"] = n, True
+            return None
+        if unit == "line" and state["page"]:
+            ref = f'{state["page"]}{n}'
+            d = ref if state["newpage"] else n
+            state["newpage"] = False
+            return {"s": ref, "d": d}
+        return {"s": ".".join(state["path"] + [n])}  # seção numerada (capítulo.seção)
 
     def emit_text(items, s):
         if s:
@@ -132,49 +176,73 @@ def tei_blocks(path):
         for ch in el:
             tag = ch.tag.replace(TEI, "")
             if tag == "milestone":
-                state["section"] = ch.get("n")
-                items.append({"s": f'{state["chapter"]}.{state["section"]}'})
+                m = milestone(ch)
+                if m:
+                    items.append(m)
             elif tag == "pb":
                 items.append({"pb": ch.get("n")})
             elif tag in ("note", "bibl"):
-                pass                                  # notas editoriais não entram no texto lido
+                pass                                  # notas e referências editoriais não entram no texto lido
+            elif tag == "del":                        # palavras que o editor exclui: [ ]
+                items.append("[")
+                walk(ch, items)
+                items.append("]")
+            elif tag == "add":                        # palavras que o editor acrescenta: ⟨ ⟩
+                items.append("⟨")
+                walk(ch, items)
+                items.append("⟩")
+            elif tag == "gap":
+                items.append(" … ")
+            elif tag == "l":                          # verso citado: um por linha
+                items.append({"br": 1})
+                walk(ch, items)
+                items.append({"br": 1})
+            elif tag == "lb":
+                items.append(" ")
             else:
                 walk(ch, items)
             emit_text(items, ch.tail)
 
-    def visit(el):
+    def label(depth, n):
+        lv = levels[min(depth, len(levels) - 1)]
+        chip = (lv.get("rotulos") or {}).get(n, n)
+        extra = (lv.get("extra") or {}).get(n)
+        return f'{lv["nome"]} {chip}' + (f" ({extra})" if extra else ""), chip
+
+    def visit(el, depth):
         for ch in el:
             tag = ch.tag.replace(TEI, "")
             if tag == "div":
                 if ch.get("type") == "textpart":
-                    state["chapter"] = ch.get("n")
-                    blocks.append({"t": "c", "c": state["chapter"]})
-                visit(ch)
+                    state["path"] = state["path"][:depth] + [ch.get("n")]
+                    rot, chip = label(depth, ch.get("n"))
+                    blocks.append({"t": "c", "c": ".".join(state["path"]), "lv": depth, "rot": rot, "chip": chip})
+                    visit(ch, depth + 1)
+                else:
+                    visit(ch, depth)
             elif tag in ("p", "head", "l", "ab"):
                 items = []
                 walk(ch, items)
-                blocks.append({"t": "h" if tag == "head" else "p", "c": state["chapter"], "x": items})
+                blocks.append({"t": "h" if tag == "head" else "p", "x": items})
             elif tag == "milestone":
-                state["section"] = ch.get("n")
-                blocks.append({"t": "m", "s": f'{state["chapter"]}.{state["section"]}'})
+                m = milestone(ch)
+                if m:
+                    blocks.append({"t": "m", "m": m})
             elif tag == "pb":
-                blocks.append({"t": "pb", "pb": ch.get("n")})
+                blocks.append({"t": "m", "m": {"pb": ch.get("n")}})
             else:
-                visit(ch)
+                visit(ch, depth)
 
-    visit(body)
+    visit(body, 0)
 
-    # Marcos soltos entre parágrafos passam para o início do parágrafo seguinte
+    # Marcos soltos entre parágrafos ou antes de um título passam para o parágrafo seguinte
     out, pending = [], []
     for b in blocks:
         if b["t"] == "m":
-            pending.append({"s": b["s"]})
-        elif b["t"] == "pb":
-            pending.append({"pb": b["pb"]})
+            pending.append(b["m"])
         elif b["t"] == "h":
-            # marcos antes de um título passam para o parágrafo seguinte
-            pending += [it for it in b["x"] if isinstance(it, dict)]
-            b["x"] = [it for it in b["x"] if not isinstance(it, dict)]
+            pending += [it for it in b["x"] if isinstance(it, dict) and "br" not in it]
+            b["x"] = [it for it in b["x"] if not isinstance(it, dict) or "br" in it]
             out.append(b)
         elif b["t"] == "p":
             b["x"] = pending + b["x"]
@@ -213,6 +281,25 @@ def split_words(blocks):
                 merged[-1] += it
             else:
                 merged.append(it)
+        # quebras de verso: sem repetição, e a pontuação que segue o verso fica na mesma linha
+        tidy = []
+        for it in merged:
+            if isinstance(it, dict) and "br" in it:
+                k = len(tidy) - 1
+                while k >= 0 and isinstance(tidy[k], str) and not tidy[k].strip():
+                    k -= 1
+                if k < 0 or (isinstance(tidy[k], dict) and "br" in tidy[k]):
+                    continue
+            elif isinstance(it, str) and tidy and isinstance(tidy[-1], dict) and "br" in tidy[-1]:
+                m = re.match(r"\s*([,.·;:)\]⟩—]+)", it)
+                if m:
+                    tidy.insert(len(tidy) - 1, m.group(1))
+                    it = it[m.end():]
+                it = it.lstrip()
+                if not it:
+                    continue
+            tidy.append(it)
+        merged = tidy
         while merged and isinstance(merged[0], str) and not merged[0].strip():
             merged.pop(0)
         while merged and isinstance(merged[-1], str) and not merged[-1].strip():
@@ -235,7 +322,8 @@ def glaux_groups(path):
     groups, cur, join_next = [], None, False
     for t in toks:
         form = nfc(t["form"])
-        if t.get("artificial") or t["postag"].startswith("u"):
+        if t.get("artificial") or not t.get("form") or "postag" not in t or t["postag"].startswith("u"):
+            # termos elípticos, pontuação e palavras excluídas pelo editor (o GLAUx não as anota)
             join_next = False
             continue
         if form.startswith("-") and cur is not None:
@@ -256,7 +344,8 @@ def glaux_groups(path):
 def build(meta_path, tei_path, glaux_path, ddgp_path, out_dir):
     meta = json.load(open(meta_path, encoding="utf-8"))
     by_acc, by_bare = load_ddgp(ddgp_path)
-    blocks = tei_blocks(tei_path)
+    hw_by_id = {e[0]: e[1] for e in json.load(open(ddgp_path, encoding="utf-8"))["entries"]}
+    blocks = tei_blocks(tei_path, meta)
     words = split_words(blocks)
     groups, by_id = glaux_groups(glaux_path)
 
@@ -300,7 +389,11 @@ def build(meta_path, tei_path, glaux_path, ddgp_path, out_dir):
         if key not in lemma_ix:
             ids, how = ddgp_ids(key, form, by_acc, by_bare)
             lemma_ix[key] = len(lemmas)
-            lemmas.append([key, ids] + ([how] if how == "forma" else []))
+            shown = key
+            if how == "forma" and ids:
+                # lema do GLAUx ausente do DDGP e verbete achado pela forma: mostra o lema do DDGP
+                shown = re.sub(r"[\d¹²³⁴]+$", "", hw_by_id[ids[0]].split(",")[0].strip().split()[0]).split("-")[0] or key
+            lemmas.append([shown, ids] + ([how] if how == "forma" else []))
         return lemma_ix[key]
 
     for wi, w in enumerate(words):
@@ -327,13 +420,7 @@ def build(meta_path, tei_path, glaux_path, ddgp_path, out_dir):
         if not any(lemmas[a[0]][1] for a in analyses):
             stats["sem_verbete"] += 1
 
-    # sentença de cada palavra (para destacar a oração inteira)
-    out_blocks = []
-    for b in blocks:
-        if b["t"] == "c":
-            out_blocks.append({"t": "c", "c": b["c"]})
-        else:
-            out_blocks.append({"t": b["t"], "x": b["x"]})
+    out_blocks = [b if b["t"] == "c" else {"t": b["t"], "x": b["x"]} for b in blocks]
 
     doc = {
         "id": meta["id"],
@@ -352,9 +439,14 @@ def build(meta_path, tei_path, glaux_path, ddgp_path, out_dir):
     idx_path = os.path.join(out_dir, "index.json")
     index = json.load(open(idx_path, encoding="utf-8")) if os.path.exists(idx_path) else {"textos": []}
     entry = {k: meta[k] for k in ("id", "autor", "autorGr", "titulo", "tituloGr", "descricao")}
+    entry["edicaoCurta"] = meta.get("edicaoCurta", "")
     entry["palavras"] = len(words)
     entry["versao"] = hashlib.sha1(json.dumps(doc, ensure_ascii=False, sort_keys=True).encode()).hexdigest()[:10]
-    index["textos"] = [t for t in index["textos"] if t["id"] != meta["id"]] + [entry]
+    ids = [t["id"] for t in index["textos"]]
+    if meta["id"] in ids:                                  # mantém a posição na biblioteca
+        index["textos"][ids.index(meta["id"])] = entry
+    else:
+        index["textos"].append(entry)
     with open(idx_path, "w", encoding="utf-8") as f:
         json.dump(index, f, ensure_ascii=False, indent=1)
 
