@@ -170,6 +170,17 @@
    "edicaoCurta": "Leopold, 1908",
    "palavras": 29267,
    "versao": "815a9a7969"
+  },
+  {
+   "id": "diogenes-laercio-epicuro",
+   "autor": "Diógenes Laércio",
+   "autorGr": "Διογένης Λαέρτιος",
+   "titulo": "Epicuro (Vidas, livro X)",
+   "tituloGr": "Ἐπίκουρος",
+   "descricao": "O livro X das Vidas de Diógenes Laércio, dedicado a Epicuro: a vida, o testamento e a carta escrita no dia da morte, e os únicos textos de Epicuro conservados por inteiro — as cartas a Heródoto (física), a Pítocles (fenômenos celestes) e a Meneceu (ética) — e as quarenta Máximas capitais.",
+   "edicaoCurta": "Hicks, 1925",
+   "palavras": 14018,
+   "versao": "b3f43ea1c1"
   }
  ]
 }

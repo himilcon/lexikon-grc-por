@@ -193,7 +193,11 @@ def tei_blocks(path, meta):
     root = ET.parse(path).getroot()
     body = root.find(f".//{TEI}body")
     blocks = []
-    state = {"path": [], "page": None, "newpage": False}
+    state = {"path": [], "page": None, "newpage": False, "part": 0}
+    # Partes temáticas definidas no arquivo de metadados (Diógenes Laércio X: vida, cartas, máximas…):
+    # cada uma começa no parágrafo cujo texto principia por "inicio"
+    parts = meta.get("partes") or []
+    skip_heads = bool(meta.get("ignorarCabecalhos"))
 
     def milestone(ch):
         unit = (ch.get("unit") or "").lower()
@@ -234,6 +238,11 @@ def tei_blocks(path, meta):
                 items.append("[")
                 walk(ch, items)
                 items.append("]")
+            elif tag == "add" and re.fullmatch(r"\[?[IVXLC]+\.?\]?", "".join(ch.itertext()).strip()):
+                # número romano acrescentado pelo editor (as Máximas capitais em Diógenes Laércio): rótulo
+                items.append({"lab": "".join(ch.itertext()).strip().strip("[].")})
+            elif tag == "add" and (ch.text or "").lstrip().startswith("["):
+                walk(ch, items)                       # escólio já marcado com [ ] pelo editor (Hicks)
             elif tag == "add":                        # palavras que o editor acrescenta: ⟨ ⟩
                 items.append("⟨")
                 walk(ch, items)
@@ -283,7 +292,15 @@ def tei_blocks(path, meta):
                     visit(ch, depth + 1)
                 else:
                     visit(ch, depth)
+            elif tag == "head" and skip_heads:
+                continue
             elif tag in ("p", "head", "l", "ab"):
+                if parts and state["part"] < len(parts) and tag == "p":
+                    pt = parts[state["part"]]
+                    key = bare(pt["inicio"])
+                    if bare("".join(ch.itertext()))[:len(key)] == key:
+                        blocks.append({"t": "c", "c": pt["id"], "lv": 0, "rot": pt["nome"], "chip": pt["chip"]})
+                        state["part"] += 1
                 items = []
                 walk(ch, items)
                 blocks.append({"t": "h" if tag == "head" else "p", "x": items})
@@ -297,6 +314,10 @@ def tei_blocks(path, meta):
                 visit(ch, depth)
 
     visit(body, 0)
+    if parts:
+        faltam = [pt["id"] for pt in parts[state["part"]:]]
+        if faltam:
+            sys.exit(f"partes não encontradas no texto: {faltam}")
 
     # Heródoto: as seções de um capítulo correm num só parágrafo (cada capítulo começa um novo)
     if meta.get("juntarParagrafos"):
@@ -398,13 +419,15 @@ def split_words(blocks):
 
 # ---------------------------------------------------------------- GLAUx
 
-def glaux_groups(path):
+def glaux_groups(path, filtro=None):
     """Agrupa os tokens do GLAUx em palavras gráficas (crase e οὔ + -τε voltam a ser uma palavra)."""
     root = ET.parse(path).getroot()
     toks = []
     for s in root:
         manual = s.get("analysis") == "manual"
         for w in s:
+            if filtro and any(w.get(k) != v for k, v in filtro.items()):
+                continue                              # só o trecho escolhido (ex.: o livro X de Diógenes Laércio)
             t = dict(w.attrib)
             t["_manual"] = manual
             toks.append(t)
@@ -437,7 +460,7 @@ def build(meta_path, tei_path, glaux_path, ddgp_path, out_dir):
     hw_by_id = {e[0]: e[1] for e in json.load(open(ddgp_path, encoding="utf-8"))["entries"]}
     blocks = tei_blocks(tei_path, meta)
     words = split_words(blocks)
-    groups, by_id = glaux_groups(glaux_path)
+    groups, by_id = glaux_groups(glaux_path, meta.get("glauxFiltro"))
 
     # alinhamento TEI ↔ GLAUx pelas letras sem diacríticos
     A = [bare(w[0]) for w in words]

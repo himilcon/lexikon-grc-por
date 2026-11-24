@@ -96,6 +96,7 @@ Textos disponíveis:
 | Xenofonte, *Anábase* (Κύρου ἀνάβασις) | Marchant, Oxford 1904 (Perseus) | 57 195 |
 | Heródoto, *Histórias* (Ἱστορίαι) | Godley, Loeb 1920 (Perseus) — anotação manual (PROIEL) em ~46% das frases | 184 943 |
 | Marco Aurélio, *Meditações* (Τὰ εἰς ἑαυτόν) | Leopold, Teubner 1908 (Perseus) | 29 267 |
+| Diógenes Laércio, *Vidas*, livro X: **Epicuro** (cartas a Heródoto, Pítocles e Meneceu; *Máximas capitais*) | Hicks, Loeb 1925 (Perseus) | 14 018 |
 
 As edições digitais de Bekker do *Órganon* (exceto as *Categorias*) não trazem a numeração de página e
 linha; a referência é livro.capítulo ou capítulo.seção. No First1KGreek, *Primeiros* e *Segundos
@@ -105,6 +106,13 @@ Em Xenofonte e Heródoto a referência é livro.capítulo.seção (`4.7.24`, `7.
 capítulos são títulos e as seções vão à margem; em Heródoto, capítulos (em destaque) e seções vão à
 margem, e cada capítulo forma um parágrafo. Os livros de Heródoto levam os nomes das Musas. O painel
 indica, palavra a palavra, se a análise é manual (treebank) ou automática.
+
+O livro X de **Diógenes Laércio** (Epicuro) é dividido em onze partes temáticas, mostradas uma por vez:
+vida, testamento, carta a Idomeneu, discípulos e obras, canônica, as cartas a Heródoto, a Pítocles e a
+Meneceu, o sábio, adivinhação e cirenaicos, e as *Máximas capitais*. A divisão não está no TEI: vem de
+`partes` no metadado (cada parte começa no parágrafo cujo texto principia por `inicio`). A margem traz
+as seções (§§), e o campo de referência aceita o número da seção (`122` → *Carta a Meneceu*). Os escólios
+que Hicks imprime no texto aparecem entre [ ]; os números romanos das *Máximas* são rótulos do editor.
 
 Em Platão, a margem traz a paginação de **Stephanus** (17a, 514a), e o campo de referência leva direto
 a ela; cada nova fala ou parágrafo começa em linha nova, com o nome do interlocutor (ΣΩ., ΜΕΝ.) quando
@@ -147,6 +155,7 @@ pelas letras sem diacríticos; a ortografia exibida é sempre a do TEI. Resultad
 | *Tópicos* | 44 116 de 44 125 | 129 de 1 506 | 316 (0,7%) |
 | *Refutações sofísticas* | 14 112 de 14 115 | 69 de 1 056 | 176 (1,2%) |
 | *Meditações* | 29 227 de 29 267 | 426 de 3 589 | 587 (2,0%: vocabulário da koiné e nomes romanos) |
+| Diógenes Laércio X (*Epicuro*) | 13 997 de 14 018 | 294 de 2 110 | 524 (3,7%: sobretudo nomes próprios de discípulos e destinatários) |
 
 As palavras sem análise são, em geral, as que o editor exclui ([ ]) ou variantes ausentes da versão do
 texto usada pelo GLAUx; o painel as procura diretamente no dicionário.
@@ -173,7 +182,10 @@ fixado em `PREFERRED`, ambos em `scripts/build_text.py`.
    nome de cada nível e os rótulos dos livros; `ignorarDivisoes` evita que divisões de página virem
    capítulos; `divisoesComoMarco` mostra divisões (capítulo, seção) como números à margem;
    `juntarParagrafos` une as seções de um capítulo num parágrafo; `referencia` e `exemploRef` ativam o
-   campo de referência; `treebank` nomeia a anotação manual, quando houver).
+   campo de referência; `treebank` nomeia a anotação manual, quando houver; `selecionar` escolhe um
+   livro de um arquivo maior e `glauxFiltro` recorta o GLAUx do mesmo modo, ex.: `{"div_book": "10"}`;
+   `partes` cria divisões temáticas que não estão no TEI, `paginar` mostra uma parte por vez e
+   `ignorarCabecalhos` omite os títulos do TEI — ver o metadado de Diógenes Laércio).
 4. Rode o conversor e confira, na lista que ele imprime, os lemas sem verbete: lemas malformados pelo
    lematizador (ex.: `ἔρχοναι` para εἶναι) vão para `LEMMA_FIX`.
 5. Gere o arquivo:

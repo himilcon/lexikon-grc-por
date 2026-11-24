@@ -1,0 +1,50 @@
+{
+  "id": "diogenes-laercio-epicuro",
+  "autor": "Diógenes Laércio",
+  "autorGr": "Διογένης Λαέρτιος",
+  "titulo": "Epicuro (Vidas, livro X)",
+  "tituloGr": "Ἐπίκουρος",
+  "cts": "urn:cts:greekLit:tlg0004.tlg001",
+  "edicao": "Diogenes Laertius, Lives of Eminent Philosophers, ed. R. D. Hicks, 2 vols. (Loeb Classical Library). Cambridge, MA: Harvard University Press; London: Heinemann, 1925. Livro X.",
+  "edicaoCurta": "Hicks, 1925",
+  "referencia": "§",
+  "exemploRef": "122",
+  "selecionar": ["book", "10"],
+  "ignorarDivisoes": ["chapter"],
+  "ignorarCabecalhos": true,
+  "divisoesComoMarco": {
+    "section": "sec"
+  },
+  "paginar": true,
+  "glauxFiltro": {
+    "div_book": "10"
+  },
+  "partes": [
+    {"id": "vida", "chip": "Vida", "nome": "Vida de Epicuro (§§ 1–16)", "inicio": "Ἐπίκουρος Νεοκλέους καὶ Χαιρεστράτης"},
+    {"id": "testamento", "chip": "Testamento", "nome": "Testamento (§§ 16–21)", "inicio": "Καὶ διέθετο ὧδε"},
+    {"id": "idomeneu", "chip": "Idomeneu", "nome": "Carta a Idomeneu, escrita no dia da morte (§ 22)", "inicio": "Ἤδη δὲ τελευτῶν γράφει"},
+    {"id": "discipulos", "chip": "Discípulos e obras", "nome": "Discípulos e obras (§§ 22–28)", "inicio": "Μαθητὰς δὲ ἔσχε πολλούς"},
+    {"id": "canonica", "chip": "Canônica", "nome": "A doutrina: divisão da filosofia e canônica (§§ 28–34)", "inicio": "Ἃ δὲ αὐτῷ δοκεῖ ἐν αὐτοῖς"},
+    {"id": "herodoto", "chip": "Carta a Heródoto", "nome": "Carta a Heródoto — a física (§§ 34–83)", "inicio": "Ἐπίκουρος Ἡροδότῳ χαίρειν"},
+    {"id": "pitocles", "chip": "Carta a Pítocles", "nome": "Carta a Pítocles — os fenômenos celestes (§§ 83–116)", "inicio": "Ἐπίκουρος Πυθοκλεῖ χαίρειν"},
+    {"id": "sabio", "chip": "O sábio", "nome": "O sábio epicurista (§§ 117–121)", "inicio": "Περὶ δὲ τῶν βιωτικῶν"},
+    {"id": "meneceu", "chip": "Carta a Meneceu", "nome": "Carta a Meneceu — a ética (§§ 121–135)", "inicio": "Ἐπίκουρος Μενοικεῖ χαίρειν"},
+    {"id": "cirenaicos", "chip": "Adivinhação e cirenaicos", "nome": "A adivinhação; diferenças em relação aos cirenaicos (§§ 135–138)", "inicio": "Μαντικὴν δʼ ἅπασαν"},
+    {"id": "maximas", "chip": "Máximas capitais", "nome": "Máximas capitais — Κύριαι δόξαι (§§ 138–154)", "inicio": "Καὶ φέρε οὖν δὴ νῦν τὸν κολοφῶνα"}
+  ],
+  "fonteTexto": {
+    "nome": "Perseus Digital Library (canonical-greekLit)",
+    "url": "https://github.com/PerseusDL/canonical-greekLit/blob/master/data/tlg0004/tlg001/tlg0004.tlg001.perseus-grc2.xml",
+    "arquivo": "data/tlg0004/tlg001/tlg0004.tlg001.perseus-grc2.xml",
+    "licenca": "CC BY-SA 4.0"
+  },
+  "fonteAnotacao": {
+    "nome": "GLAUx — The Greek Language Automated (A. Keersmaekers, KU Leuven)",
+    "url": "https://github.com/alekkeersmaekers/glaux",
+    "arquivo": "xml/0004-001.xml (só o livro X)",
+    "licenca": "CC BY-SA 4.0",
+    "nota": "Lemas, morfologia e sintaxe anotados automaticamente (precisão informada pelo projeto: lemas 98,8%, morfologia 97,2%, sintaxe ~80%)."
+  },
+  "notaEdicao": "Os números à margem são as seções (§§) do livro X, a referência usual (ex.: D. L. X 122). A divisão em partes (vida, testamento, cartas, máximas) não está no texto: foi feita para a leitura. Entre [ ] estão os escólios que Hicks imprime dentro do texto; entre ⟨ ⟩, as palavras que os editores acrescentam. Os números romanos antes das Máximas capitais também são do editor.",
+  "descricao": "O livro X das Vidas de Diógenes Laércio, dedicado a Epicuro: a vida, o testamento e a carta escrita no dia da morte, e os únicos textos de Epicuro conservados por inteiro — as cartas a Heródoto (física), a Pítocles (fenômenos celestes) e a Meneceu (ética) — e as quarenta Máximas capitais."
+}

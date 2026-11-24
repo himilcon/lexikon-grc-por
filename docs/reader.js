@@ -95,7 +95,7 @@ async function loadText(id) {
 function indexText(doc) {
   // um livro por vez quando a obra se divide em livros (Metafísica, República) ou tem dois níveis
   const top = (doc.meta.niveis || [])[0];
-  doc.paged = doc.blocos.some(b => b.t === "c" && b.lv > 0) || !!(top && top.nome === "Livro");
+  doc.paged = doc.blocos.some(b => b.t === "c" && b.lv > 0) || !!(top && top.nome === "Livro") || !!doc.meta.paginar;
   doc.parts = []; doc.chapters = [];
   doc.refPart = new Map(); doc.refs = [];
   let wi = 0, cur = null;
